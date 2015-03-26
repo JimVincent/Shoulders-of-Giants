@@ -1,0 +1,19 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\Desktop\SutherlandHodgman\readme.txt">
+    <Files>
+      <File FileName="Assets\Scripts\Buttons\HUDButtonScript.cs" Line="41" Column="61" />
+      <File FileName="Assets\Scripts\Animation\AnimationController.cs" Line="12" Column="18" />
+      <File FileName="Assets\Scripts\Camara\CamaraFollow.cs" Line="7" Column="26" />
+      <File FileName="Assets\Scripts\Camara\CamaraSwitch.cs" Line="8" Column="33" />
+      <File FileName="Assets\Scripts\Hud\HUDScript.cs" Line="24" Column="2" />
+      <File FileName="Assets\Scripts\Buttons\HUDButtonScript.cs" Line="108" Column="1" />
+      <File FileName="Assets\Scripts\AudioManager\AudioManager.cs" Line="17" Column="4" />
+      <File FileName="..\..\Desktop\SutherlandHodgman\readme.txt" Line="11" Column="62" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
