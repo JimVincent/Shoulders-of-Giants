@@ -30,8 +30,9 @@ public class Character_Movement : MonoBehaviour {
 			moveDirection *= speed;
 			y = transform.rotation.y;
 
-			if(Input.GetKeyDown("space"))
+			if(Input.GetButton("Jump"))
 			{
+				Debug.Log("Jumping");
 				moveDirection.y = jumpSpeed;
 			}
 		}
@@ -47,7 +48,7 @@ public class Character_Movement : MonoBehaviour {
 	
 	void Update () 
 	{
-		Quaternion targetf = Quaternion.Euler(0, 270, 0); // Vector3 Direction when facing frontway
+		Quaternion targetf = Quaternion.Euler(0, 180, 0); // Vector3 Direction when facing frontway
 		Quaternion targetb = Quaternion.Euler(0, 90, 0); // Vector3 Direction when facing opposite way
 
 		if (Input.GetAxisRaw ("Vertical") < 0.0f) // if input is lower than 0 turn to targetf
