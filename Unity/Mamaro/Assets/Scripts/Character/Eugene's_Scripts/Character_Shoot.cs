@@ -10,7 +10,7 @@ public class Character_Shoot : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown ("4")) {
+		if (Input.GetButton("Fire1")) {
 			 Instantiate(bullet, new Vector3 (transform.position.x, transform.position.y, transform.position.z + 5), transform.rotation);
 				}
 	}
