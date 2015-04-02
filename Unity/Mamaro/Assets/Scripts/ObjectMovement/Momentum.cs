@@ -10,6 +10,6 @@ public class Momentum : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		rigidbody.AddForce((-transform.up) * speed, ForceMode.Force);
+		GetComponent<Rigidbody>().AddForce((-transform.up) * speed, ForceMode.Force);
 	}
 }

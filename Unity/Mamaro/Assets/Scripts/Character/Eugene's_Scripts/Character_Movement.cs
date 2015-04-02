@@ -59,6 +59,15 @@ public class Character_Movement : MonoBehaviour {
 		{
 			//transform.rotation = Quaternion.Lerp(transform.rotation, targetb, Time.deltaTime * turnSpeed);
 		}
+		if (Input.GetKey(KeyCode.M)) // if input is higher than 0 turn to targetb
+		{
+			print ("Time 0");
+			Time.timeScale = 0.1f;//transform.rotation = Quaternion.Lerp(transform.rotation, targetb, Time.deltaTime * turnSpeed);
+		}
+		else
+		{
+			Time.timeScale = 1;//transform.rotation = Quaternion.Lerp(transform.rotation, targetb, Time.deltaTime * turnSpeed);
+		}
 	}
 	
 	void OnControllerColliderHit(ControllerColliderHit hit) {

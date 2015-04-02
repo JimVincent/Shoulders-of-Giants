@@ -45,7 +45,7 @@ public class HUDScript : MonoBehaviour {
 			OptionsActive = false;
 			this.transform.GetChild (2).gameObject.SetActive (false);
 			Time.timeScale = 1;
-			Debug.Log (Time.timeScale.ToString ());
+			//Debug.Log (Time.timeScale.ToString ());
 			this.transform.GetChild(0).gameObject.SetActive(false);
 			this.transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
 			menuActive = false;

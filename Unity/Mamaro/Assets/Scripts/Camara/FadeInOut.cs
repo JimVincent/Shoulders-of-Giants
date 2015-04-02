@@ -25,13 +25,13 @@ public class FadeInOut : MonoBehaviour {
 
 	void FadeToClear()
 	{
-		layerMesh.renderer.material.color = Color.Lerp (layerMesh.renderer.material.color, Color.clear, fadeSpeed * Time.deltaTime);
+		layerMesh.GetComponent<Renderer>().material.color = Color.Lerp (layerMesh.GetComponent<Renderer>().material.color, Color.clear, fadeSpeed * Time.deltaTime);
 		//guiTexture.color = Color.Lerp (guiTexture.color, Color.clear, fadeSpeed * Time.deltaTime);
 	}
 
 	void FadetoBlack()
 	{
-		layerMesh.renderer.material.color = Color.Lerp (layerMesh.renderer.material.color, Color.black, fadeSpeed * Time.deltaTime);
+		layerMesh.GetComponent<Renderer>().material.color = Color.Lerp (layerMesh.GetComponent<Renderer>().material.color, Color.black, fadeSpeed * Time.deltaTime);
 		//guiTexture.color = Color.Lerp (guiTexture.color, Color.black, fadeSpeed * Time.deltaTime);
 	}
 
@@ -39,10 +39,10 @@ public class FadeInOut : MonoBehaviour {
 	{
 		FadeToClear ();
 		//3d Based Fade in out
-		if (layerMesh.renderer.material.color.a <= 0.05f) 
+		if (layerMesh.GetComponent<Renderer>().material.color.a <= 0.05f) 
 		{
-			layerMesh.renderer.material.color = Color.clear;
-			layerMesh.renderer.enabled = false;
+			layerMesh.GetComponent<Renderer>().material.color = Color.clear;
+			layerMesh.GetComponent<Renderer>().enabled = false;
 			sceneStarting = false;
 		}
 		//Gui Based fade in out
@@ -58,11 +58,11 @@ public class FadeInOut : MonoBehaviour {
 
 	void EndScene()
 	{
-		layerMesh.renderer.enabled = true;
+		layerMesh.GetComponent<Renderer>().enabled = true;
 		//guiTexture.enabled = true;
 		FadetoBlack ();
 
-		if (layerMesh.renderer.material.color.a <= 0.05f) 
+		if (layerMesh.GetComponent<Renderer>().material.color.a <= 0.05f) 
 		{
 			Application.LoadLevel(0);
 		}

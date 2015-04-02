@@ -5,7 +5,7 @@ public class Bullet_Collision : MonoBehaviour {
 	public float speed = 2000f;
 	// Use this for initialization
 	void Awake () {
-		transform.rigidbody.velocity = transform.forward * speed * Time.deltaTime;
+		transform.GetComponent<Rigidbody>().velocity = transform.forward * speed * Time.deltaTime;
 		Destroy(this.gameObject, 5);
 	}
 	

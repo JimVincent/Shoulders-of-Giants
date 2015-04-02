@@ -25,6 +25,6 @@ public class PlayerController : MonoBehaviour {
 		}
 
 	void FixedUpdate(){
-		rigidbody.MovePosition (rigidbody.position + transform.TransformDirection (moveDir) * moveSpeed * Time.deltaTime);
+		GetComponent<Rigidbody>().MovePosition (GetComponent<Rigidbody>().position + transform.TransformDirection (moveDir) * moveSpeed * Time.deltaTime);
 	}
 }
