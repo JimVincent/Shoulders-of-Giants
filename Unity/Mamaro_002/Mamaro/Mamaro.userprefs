@@ -1,8 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\..\..\..\..\..\..\XInputUnity\Assets\XInputTest.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Charaters\Mamaro\MamaroMovement.cs">
     <Files>
-      <File FileName="..\..\..\..\..\..\..\..\XInputUnity\Assets\XInputTest.cs" Line="39" Column="43" />
+      <File FileName="..\..\..\..\..\..\..\..\XInputUnity\Assets\XInputTest.cs" Line="44" Column="47" />
+      <File FileName="Assets\Scripts\Charaters\Mamaro\MamaroMovement.cs" Line="53" Column="49" />
+      <File FileName="Assets\Scripts\Charaters\Mamaro\MamaroController.cs" Line="60" Column="30" />
+      <File FileName="..\..\..\..\..\..\..\..\XInputUnity\Assets\XInputDotNet\Examples\XInputTestCS.cs" Line="64" Column="9" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
