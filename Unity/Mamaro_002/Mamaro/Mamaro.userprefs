@@ -1,9 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Scripts_General\Ability_Manager.cs">
     <Files>
-      <File FileName="Assets\Scripts\Scripts_Misc\AbilitySocket.cs" Line="34" Column="13" />
-      <File FileName="Assets\Scripts\Scripts_General\Ability_Manager.cs" Line="24" Column="76" />
+      <File FileName="Assets\Scripts\Scripts_General\Ability_Manager.cs" Line="60" Column="3" />
+      <File FileName="Assets\Scripts\Scripts_Misc\AbilitySocket.cs" Line="26" Column="41" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

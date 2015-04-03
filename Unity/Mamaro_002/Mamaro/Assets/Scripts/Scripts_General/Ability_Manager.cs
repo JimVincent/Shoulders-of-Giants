@@ -21,7 +21,10 @@ public class Ability_Manager : MonoBehaviour
 		// set each ability sockets disabled and enabled pos
 		for(int i = 0; i < sockets.Length; ++i)
 		{
-			sockets[i].disabledPos = sockets[i].socketImage.transform.localPosition;
+			Vector3 temp = sockets[i].socketImage.transform.localPosition;
+			sockets[i].disabledPos = temp;
+			sockets[i].enabledPos = new Vector3(temp.x, temp.y + sockets[0].socketImage.rectTransform.localScale.y, temp.z);
+			sockets[i].socketImage.transform.localPosition = sockets[i].enabledPos;
 		}
 	}
 
@@ -49,5 +52,11 @@ public class Ability_Manager : MonoBehaviour
 			spareCoreDisplayText.text = "0" + spareCores.ToString();
 		else
 			spareCoreDisplayText.text = spareCores.ToString();
+	}
+
+	// allows user input to control rotation and core adding/removing cores
+	private void InputControl()
+	{
+
 	}
 }

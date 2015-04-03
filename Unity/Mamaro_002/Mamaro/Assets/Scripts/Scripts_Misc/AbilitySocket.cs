@@ -23,9 +23,8 @@ public class AbilitySocket
 	
 	// inspector hidden vars
 	[HideInInspector]
-	public Vector3 disabledPos;
-	[HideInInspector]
-	public Vector3 enabledPos;
+	public Vector3 disabledPos, enabledPos;
+
 
 	// private vars
 	private int activeCores = 0;
