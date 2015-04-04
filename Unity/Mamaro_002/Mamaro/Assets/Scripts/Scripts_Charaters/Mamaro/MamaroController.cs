@@ -38,13 +38,12 @@ public class MamaroController : MonoBehaviour {
 				}
 			}
 		}
-
 		state = GamePad.GetState(playerIndex);
 		//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 		//LeftStickMovement
-		move.moveDir = transform.right * state.ThumbSticks.Left.X;
+		move.moveDir = transform.right * state.ThumbSticks.Left.X / 2;
 		move.moveDir += transform.forward * state.ThumbSticks.Left.Y;
 
 		//RightStickMovement
@@ -63,6 +62,20 @@ public class MamaroController : MonoBehaviour {
 		else
 		{
 			move.isRun = false;
+		}
+
+		//Dodge Controls
+		if (state.Buttons.A == ButtonState.Pressed && prevState.Buttons.A == ButtonState.Released)
+		{
+			Vector3 tempDir;
+
+			tempDir = transform.right * state.ThumbSticks.Left.X;
+			tempDir += transform.forward * state.ThumbSticks.Left.Y;
+
+			tempDir = tempDir.normalized;
+
+			move.Dodge(tempDir);
+
 		}
 
 
