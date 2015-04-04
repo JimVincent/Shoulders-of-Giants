@@ -57,10 +57,7 @@
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="XInputDotNetPure">
- <HintPath>C:/Users/Chris/Desktop/Uni/Trimester 4 2015/GPG220 Studio 2/Mamoro/Repo/Unity/Mamaro_002/Mamaro/Assets/Plugins/x86/XInputDotNetPure.dll</HintPath>
- </Reference>
- <Reference Include="XInputDotNetPure">
- <HintPath>C:/Users/Chris/Desktop/Uni/Trimester 4 2015/GPG220 Studio 2/Mamoro/Repo/Unity/Mamaro_002/Mamaro/Assets/Plugins/x86_64/XInputDotNetPure.dll</HintPath>
+ <HintPath>C:/Users/Jim/Desktop/Repo Projects/Mamaro/Unity/Mamaro_002/Mamaro/Assets/XInputDotNetPure.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -76,46 +76,73 @@ public class Ability_Manager : MonoBehaviour
 	// allows user input to control rotation and core adding/removing cores
 	private void InputControl()
 	{
-		// vars for rotation
+
 		currentAngle = controlPanel_Parent.transform.rotation.eulerAngles.z;
 
 		// input for which way to rotate
 		if(Input.GetKeyDown(KeyCode.LeftArrow))
 		{
 			// allow change of mind during rotation
-			if(isRotating && rotDir == "Right")
+			if(isRotating)
 			{
-				targetAngle -= 90.0f;
+				// only allow a change of direction during rotation
+				if(rotDir == "Right")
+				{
+					targetAngle -= 90.0f;
+					startAngle = currentAngle;
+					lerpInc = 0.0f;
+					rotDir = "Left";
+				}
 			}
 			else
+			{
 				targetAngle = currentAngle - 90.0f;
-
-			rotDir = "Left";
+				startAngle = currentAngle;
+				rotDir = "Left";
+			}
 		}
 		else if(Input.GetKeyDown(KeyCode.RightArrow))
 		{
 			// allow change of mind during rotation
-			if(isRotating && rotDir == "Left")
+			if(isRotating)
 			{
-				targetAngle += 90.0f;
+				// only allow a change of direction during rotation
+				if(rotDir == "Left")
+				{
+					startAngle = currentAngle;
+					targetAngle += 90.0f;
+					lerpInc = 0.0f;
+					rotDir = "Right";
+				}
 			}
 			else
+			{
 				targetAngle = currentAngle + 90.0f;
-			
-			rotDir = "Right";
+				startAngle = currentAngle;
+				rotDir = "Right";
+			}
 		}
 
-		LerpLin();
+
 
 		// apply lerp rotation
-		controlPanel_Parent.transform.rotation = Quaternion.Euler(controlPanel_Parent.transform.rotation.eulerAngles.x, controlPanel_Parent.transform.rotation.eulerAngles.y, Mathf.LerpAngle(startAngle, targetAngle, rotationSpeed * lerpInc));
+		if(currentAngle == targetAngle)
+		{
+			lerpInc = 0.0f;
+			isRotating = false;
+		}
+		else
+		{
+			currentAngle = Mathf.Lerp(startAngle, targetAngle, lerpInc);
+			isRotating = true;
+			controlPanel_Parent.transform.rotation = Quaternion.Euler(controlPanel_Parent.transform.rotation.x, controlPanel_Parent.transform.rotation.y, currentAngle);
+			LerpLin();
+		}
 	}
 
-	// a smoothStep interpolation
+	// a linear interpolation
 	private void LerpLin()
 	{
-		float t = lerpInc;
-		t = t*t*t * (t * (6f*t - 15f) + 10f);
-		lerpInc = t;
+		lerpInc += (Time.deltaTime * rotationSpeed);
 	}
 }
