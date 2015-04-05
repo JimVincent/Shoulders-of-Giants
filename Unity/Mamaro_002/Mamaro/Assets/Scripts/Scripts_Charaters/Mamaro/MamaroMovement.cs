@@ -122,7 +122,6 @@ public class MamaroMovement : MonoBehaviour {
 		if (!isDodge)
 		{
 			rb.velocity = Vector3.zero;
-			print ("dir<" + (Vector3.up * dodgeForceVert).ToString ());
 			rb.AddForce(dir * dodgeForceHorz,ForceMode.Impulse);
 			rb.AddForce(Vector3.up * dodgeForceVert,ForceMode.Impulse);
 			isDodge = true;

@@ -65,19 +65,24 @@ public class MamaroController : MonoBehaviour {
 		}
 
 		//Dodge Controls
-		if (state.Buttons.A == ButtonState.Pressed && prevState.Buttons.A == ButtonState.Released)
+		if (state.Buttons.A == ButtonState.Pressed && prevState.Buttons.A == ButtonState.Released && move.moveDir.magnitude > 0)
 		{
 			Vector3 tempDir;
-
 			tempDir = transform.right * state.ThumbSticks.Left.X;
 			tempDir += transform.forward * state.ThumbSticks.Left.Y;
-
 			tempDir = tempDir.normalized;
-
 			move.Dodge(tempDir);
-
 		}
 
+
+		if (state.DPad.Left == ButtonState.Pressed)
+		{
+			Ability_Manager_Chris_try.inst.SelectSocketLeft();
+		}
+		if (state.DPad.Right == ButtonState.Pressed)
+		{
+			Ability_Manager_Chris_try.inst.SelectSocketRight();
+		}
 
 
 
