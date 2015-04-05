@@ -1,19 +1,8 @@
 ﻿<Properties>
-<<<<<<< HEAD
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Scripts_General\Ability_Manager.cs">
     <Files>
-      <File FileName="Assets\Scripts\Scripts_Charaters\Mamaro\MamaroController.cs" Line="144" Column="1" />
-      <File FileName="Assets\Scripts\Scripts_Charaters\Mamaro\MamaroMovement.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Scripts_General\Ability_Manager.cs" Line="231" Column="6" />
-      <File FileName="Assets\Scripts\Scripts_Misc\AbilitySocket.cs" Line="37" Column="39" />
-=======
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\..\..\XInputDotNet-master\Build\Instructions.txt">
-    <Files>
-      <File FileName="Assets\XInputDotNet\Examples\XInputTestCS.cs" Line="29" Column="18" />
-      <File FileName="..\..\..\..\XInputDotNet-master\Build\Instructions.txt" Line="1" Column="1" />
->>>>>>> 2781e0e9f750af2584dbed8d60f61eb25fe7230a
+      <File FileName="Assets\Scripts\Scripts_General\Ability_Manager.cs" Line="32" Column="31" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
