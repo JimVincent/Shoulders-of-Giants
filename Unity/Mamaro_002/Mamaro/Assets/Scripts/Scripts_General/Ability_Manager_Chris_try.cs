@@ -59,14 +59,14 @@ public class Ability_Manager_Chris_try : MonoBehaviour
 		//UpdateSparetext();
 
 		// apply lerp rotation
-		if((int)currentAngle == (int)GetFromToAngles().y)
+		if((int)currentAngle == GetSocketAngle(selectedSocket))
 		{
 			lerpInc = 0.0f;
 			isRotating = false;
 		}
 		else
 		{
-			currentAngle = Mathf.LerpAngle(GetFromToAngles().x, GetFromToAngles().y, lerpInc);
+			currentAngle = Mathf.LerpAngle(GetSocketAngle(previousSocket), GetSocketAngle(selectedSocket), lerpInc);
 			isRotating = true;
 			controlPanel_Parent.transform.rotation = Quaternion.Euler(controlPanel_Parent.transform.rotation.x, controlPanel_Parent.transform.rotation.y, currentAngle);
 			LerpLin();
@@ -100,6 +100,7 @@ public class Ability_Manager_Chris_try : MonoBehaviour
 			spareCoreDisplayText.text = spareCores.ToString();
 	}
 
+	//Public Function to Allow Controller Input
 	public void SelectSocketLeft()
 	{
 		// allow change of mind during rotation
@@ -131,6 +132,7 @@ public class Ability_Manager_Chris_try : MonoBehaviour
 		}
 	}
 
+	///Public Function to Select the next Socket to the left
 	public void SelectSocketRight()
 	{
 		// allow change of mind during rotation
@@ -166,7 +168,7 @@ public class Ability_Manager_Chris_try : MonoBehaviour
 		
 	}
 
-	// allows user input to control rotation and core adding/removing cores
+	/// allows user input to control rotation and core adding/removing cores
 	private void InputControl()
 	{
 		currentAngle = controlPanel_Parent.transform.rotation.eulerAngles.z;
@@ -182,14 +184,14 @@ public class Ability_Manager_Chris_try : MonoBehaviour
 		}
 	}
 
-	Vector2 GetFromToAngles()
+	///Returns Angle for Given Socket
+	int GetSocketAngle(int socketNum)
 	{
-		Vector2 temp = new Vector2(previousSocket * 90, selectedSocket * 90);
-		return temp; 
+		return socketNum * 90; 
 	}
 
 
-	// a linear interpolation
+	/// a linear interpolation
 	private void LerpLin()
 	{
 		lerpInc += (Time.deltaTime * rotationSpeed);
