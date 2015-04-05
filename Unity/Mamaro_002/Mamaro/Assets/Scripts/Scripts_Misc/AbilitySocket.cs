@@ -20,9 +20,10 @@ public class AbilitySocket
 	public Image socketImage;
 	public Image[] coresImages = new Image[4];
 	public Sprite activeSprite, deactiveSprite;
+	public AbilitySocket oppositeSocket;
 	
 	// inspector hidden vars
-	[HideInInspector]
+	//[HideInInspector]
 	public Vector3 disabledPos, enabledPos;
 
 
@@ -30,13 +31,14 @@ public class AbilitySocket
 	private int activeCores = 0;
 
 	// changes the next deactive core to active if valid
-	public void AddCores()
+	public void AddCore()
 	{
 		// check capacity
 		if(activeCores < coresImages.Length)
 		{
+			coresImages[activeCores].sprite = activeSprite;
 			activeCores++;
-			coresImages[activeCores-1].sprite = activeSprite;
+
 			// TODO Play foley add sound
 		}
 		else
@@ -47,13 +49,13 @@ public class AbilitySocket
 	}
 
 	// changes the last active core to deactive if valid
-	public void RemoveCores()
+	public void RemoveCore()
 	{
 		// check capacity
 		if(activeCores > 0)
 		{
+			coresImages[activeCores-1].sprite = deactiveSprite;
 			activeCores--;
-			coresImages[activeCores-1].sprite = activeSprite;
 			// TODO Play foley remove sound
 		}
 		else

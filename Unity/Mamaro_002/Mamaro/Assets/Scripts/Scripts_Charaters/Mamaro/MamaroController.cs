@@ -139,13 +139,13 @@ public class MamaroController : MonoBehaviour {
 		}
 		
 		
-		if (Input.GetKeyDown(KeyCode.LeftArrow))
-		{
-			Ability_Manager_Chris_try.inst.SelectSocketLeft();
-		}
-		if (Input.GetKeyDown(KeyCode.RightArrow))
-		{
-			Ability_Manager_Chris_try.inst.SelectSocketRight();
-		}
+//		if (Input.GetKeyDown(KeyCode.LeftArrow))
+//		{
+//			Ability_Manager_Chris_try.inst.SelectSocketLeft();
+//		}
+//		if (Input.GetKeyDown(KeyCode.RightArrow))
+//		{
+//			Ability_Manager_Chris_try.inst.SelectSocketRight();
+//		}
 	}
 }
