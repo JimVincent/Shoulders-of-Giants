@@ -7,6 +7,7 @@ public class Mamaro_Attack : MonoBehaviour
 	public int maxAttack, maxRangedCoolDown;
 	[Range(15.0f, 30.0f)]
 	public float chargeRate = 10.0f;
+	public Collider fistCollider;
 
 	// private vars
 	public bool isAttacking = false;
@@ -21,7 +22,7 @@ public class Mamaro_Attack : MonoBehaviour
 	void Awake() 
 	{
 		anim = GetComponentInChildren<Animator>();
-
+		fistCollider.enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -32,6 +33,10 @@ public class Mamaro_Attack : MonoBehaviour
 		RangedAttack();
 		ChargePunch();
 		ChargeRanged();
+
+		// check to turn off fist collider
+		if (anim.tag == "Anim_Idle")
+			fistCollider.enabled = false;
 	}
 
 	// applies punch attack sequence
@@ -103,6 +108,9 @@ public class Mamaro_Attack : MonoBehaviour
 			//Set Animation to start
 			anim.SetTrigger("Trig_MeeleAttack");
 			anim.SetBool("Bool_MeeleCharge", false);
+
+			// turn on fist collider
+			fistCollider.enabled = true;
 		}
 
 

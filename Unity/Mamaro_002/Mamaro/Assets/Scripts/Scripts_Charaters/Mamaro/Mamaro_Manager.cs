@@ -35,7 +35,7 @@ public class Mamaro_Manager : MonoBehaviour
 		////////////////////////////////////////////
 		/// Testing damage function	///////////////
 		//////////////////////////////////////////
-		if(Input.GetKeyDown(KeyCode.D))		/////
+		if(Input.GetKeyDown(KeyCode.F4))		/////
 		{								   /////
 			int testDamage = largeDamage; /////
 			TakeDamage(testDamage);      /////
