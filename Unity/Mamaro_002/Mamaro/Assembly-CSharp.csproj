@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Scripts_Charaters\Mamaro\MamaroController.cs" />
      <Compile Include="Assets\Scripts\Scripts_Charaters\Mamaro\MamaroMovement.cs" />
+     <Compile Include="Assets\Scripts\Scripts_Charaters\Mamaro\Mamaro_Attack.cs" />
      <Compile Include="Assets\Scripts\Scripts_Charaters\Mamaro\Mamaro_Manager.cs" />
      <Compile Include="Assets\Scripts\Scripts_General\Ability_Manager.cs" />
      <Compile Include="Assets\Scripts\Scripts_General\Cam_Manager.cs" />
