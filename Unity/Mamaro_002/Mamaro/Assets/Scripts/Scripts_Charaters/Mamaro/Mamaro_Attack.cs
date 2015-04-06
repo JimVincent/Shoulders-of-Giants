@@ -13,10 +13,15 @@ public class Mamaro_Attack : MonoBehaviour
 	public float punchCharge = 0.0f, rangedCharge = 0.0f;
 
 
+	//Animation Variables
+	Animator anim;
+
+
 	// Use this for initialization
-	void Start () 
+	void Awake() 
 	{
-	
+		anim = GetComponentInChildren<Animator>();
+
 	}
 	
 	// Update is called once per frame
@@ -75,6 +80,32 @@ public class Mamaro_Attack : MonoBehaviour
 	// adds ranged charge from 0 to 100 in respects to time held
 	private void ChargeRanged()
 	{
+
+		if (Input.GetKeyDown(KeyCode.Q))
+		{
+			//Set Animation to start
+			anim.SetBool("Bool_RangedCharge", true);
+		}
+		else if (Input.GetKeyUp(KeyCode.Q))
+		{
+			//Set Animation to start
+			anim.SetTrigger("Trig_RangedAttack");
+			anim.SetBool("Bool_RangedCharge", false);
+		}
+
+		if (Input.GetKeyDown(KeyCode.E))
+		{
+			//Set Animation to start
+			anim.SetBool("Bool_MeeleCharge", true);
+		}
+		else if (Input.GetKeyUp(KeyCode.E))
+		{
+			//Set Animation to start
+			anim.SetTrigger("Trig_MeeleAttack");
+			anim.SetBool("Bool_MeeleCharge", false);
+		}
+
+
 		// receive held input
 		if(Input.GetKey(KeyCode.Q))
 		{
@@ -87,7 +118,7 @@ public class Mamaro_Attack : MonoBehaviour
 					rangedCharge = 100.0f;
 			}
 		}
-		else
+		else 
 		{
 			//rangedCharge = 0.0f;	// button let go looses charge ??????
 			// or
