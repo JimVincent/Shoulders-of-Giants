@@ -34,9 +34,12 @@ public class Mamaro_Attack : MonoBehaviour
 		ChargePunch();
 		ChargeRanged();
 
-		// check to turn off fist collider
-		if (anim.tag == "Anim_Idle")
+		//check to turn off fist collider
+		if (anim.GetCurrentAnimatorStateInfo(0).IsName("CHR_Mamaro_Anim_Idle"))
+		{
 			fistCollider.enabled = false;
+		}
+
 	}
 
 	// applies punch attack sequence

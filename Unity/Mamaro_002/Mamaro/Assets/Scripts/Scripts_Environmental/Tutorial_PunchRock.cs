@@ -36,6 +36,7 @@ public class Tutorial_PunchRock : MonoBehaviour
 				rigidB.isKinematic = false;
 				rigidB.AddForce(new Vector3(0, 5, 10), ForceMode.Impulse);
 				transform.Rotate(new Vector3(10, 0, -10));
+				Cam_Manager.inst.ShakeCam(Shake.Small);
 			}
 
 			//TODO play rock hit (blunt) sound
