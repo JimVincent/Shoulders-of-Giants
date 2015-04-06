@@ -13,25 +13,25 @@ public class Ability_Manager : MonoBehaviour
 	public Text spareCoreDisplayText;
 	
 	// public vars
-	public float rotationSpeed;
+	public float rotationSpeed = 2.0f;
 	public float sliderSpeed;
-	public float sliderHangTime = 3.0f;
+	public float sliderHangTime = 2.5f;
 	
 	// private vars
 	private int spareCores = 0;
-	public int selectedSocket = 0;
-	public int previousSocket = 0;
+	private int selectedSocket = 0;
+	private int previousSocket = 0;
 	
 	// vars for rotation
-	public float currentAngle;
-	public float lerpInc;
-	public bool isRotating;
-	public string rotDir;
+	private float currentAngle;
+	private float lerpInc;
+	private bool isRotating;
+	private string rotDir;
 
 	// vars for socket slider
-	public bool shownOnce = true;
-	public bool sliderActive = false;
-	public float sHangTimer = 0.0f;
+	private bool shownOnce = true;
+	private bool showSocket = false;
+	private float sHangTimer = 0.0f;
 	
 	void Awake()
 	{
@@ -61,27 +61,25 @@ public class Ability_Manager : MonoBehaviour
 		// allow user input control
 		InputControl();
 
-	
-
-		// apply lerp rotation
+		// in position
 		if((int)currentAngle == GetSocketAngle(selectedSocket))
 		{
 			lerpInc = 0.0f;
 			isRotating = false;
 
 			// extrude slider for x seconds
-			if(sliderActive)
+			if(showSocket)
 			{
 				// slide out
 				SlideSocket(sockets[selectedSocket].socketImage, sockets[selectedSocket].disabledPos, sockets[selectedSocket].enabledPos);
 				
 				// slide shut once time limit reached or if rotating
 				sHangTimer += Time.deltaTime;
-				if(sHangTimer > sliderHangTime || isRotating)
+				if(sHangTimer > sliderHangTime)
 				{
 					SlideSocket(sockets[selectedSocket].socketImage, sockets[selectedSocket].enabledPos, sockets[selectedSocket].disabledPos);
 					sHangTimer = 0.0f;
-					sliderActive = false;
+					showSocket = false;
 					shownOnce = true;
 				}
 			}
@@ -92,13 +90,17 @@ public class Ability_Manager : MonoBehaviour
 			isRotating = true;
 			controlPanel_Parent.transform.rotation = Quaternion.Euler(controlPanel_Parent.transform.rotation.x, controlPanel_Parent.transform.rotation.y, currentAngle);
 			LerpLin();
-		}
-		
-			
 
-		
+			// close slider before changing selected socket
+			if(showSocket)
+			{
+				SlideSocket(sockets[previousSocket].socketImage, sockets[previousSocket].enabledPos, sockets[previousSocket].disabledPos);
+				sHangTimer = 0.0f;
+				//showSocket = false;
+				shownOnce = false;
+			}
+		}
 	}
-	
 	
 	// sets each socket to the desired amount
 	public void SetSockets(int melee, int speed, int ranged, int shield, int spare)
@@ -184,8 +186,6 @@ public class Ability_Manager : MonoBehaviour
 			lerpInc = 0;
 			rotDir = "Right";
 		}
-		
-		
 	}
 	
 	/// allows user input to control rotation and core adding/removing cores
@@ -196,13 +196,13 @@ public class Ability_Manager : MonoBehaviour
 		// input for which way to rotate
 		if(Input.GetKeyDown(KeyCode.LeftArrow))
 		{
+			showSocket = true;
 			SelectSocketLeft();
-			shownOnce = false;
 		}
 		else if(Input.GetKeyDown(KeyCode.RightArrow))
 		{
+			showSocket = true;
 			SelectSocketRight();
-			shownOnce = false;
 		}
 
 		///////////////////////////////////////////////////////////////////
@@ -211,7 +211,7 @@ public class Ability_Manager : MonoBehaviour
 		if(!isRotating)
 		{
 			// add cores to selected
-			if(Input.GetKeyDown(KeyCode.UpArrow) && sliderActive)
+			if(Input.GetKeyDown(KeyCode.UpArrow) && showSocket)
 			{
 				// check if already full
 				if(sockets[selectedSocket].GetCoreCount() < 4)
@@ -232,7 +232,7 @@ public class Ability_Manager : MonoBehaviour
 				sHangTimer = 0.0f;
 			}
 
-			if(Input.GetKeyDown(KeyCode.DownArrow) && sliderActive)
+			if(Input.GetKeyDown(KeyCode.DownArrow) && showSocket)
 			{
 				// check for empty
 				if(sockets[selectedSocket].GetCoreCount() > 0)
@@ -247,8 +247,8 @@ public class Ability_Manager : MonoBehaviour
 			// show only once per rotation or up input
 			if(!shownOnce || Input.GetKeyDown(KeyCode.UpArrow))
 			{
-				sliderActive = true;
-				shownOnce = false;
+				showSocket = true;
+				shownOnce = true;
 			}
 		}
 	}
@@ -262,10 +262,10 @@ public class Ability_Manager : MonoBehaviour
 	// slides image from a to b with lerp
 	private void SlideSocket(Image socket, Vector3 from, Vector3 to)
 	{
+		// TODO apply a lerp (from, to)
 		socket.transform.localPosition = to;
 	}
-	
-	
+
 	/// a linear interpolation
 	private void LerpLin()
 	{

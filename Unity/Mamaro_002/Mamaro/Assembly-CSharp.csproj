@@ -49,8 +49,10 @@
      <Compile Include="Assets\Scripts\ObjectExports\ObjExporterScript.cs" />
      <Compile Include="Assets\Scripts\Scripts_Charaters\Mamaro\MamaroController.cs" />
      <Compile Include="Assets\Scripts\Scripts_Charaters\Mamaro\MamaroMovement.cs" />
+     <Compile Include="Assets\Scripts\Scripts_Charaters\Mamaro\Mamaro_Attack.cs" />
+     <Compile Include="Assets\Scripts\Scripts_Charaters\Mamaro\Mamaro_Manager.cs" />
      <Compile Include="Assets\Scripts\Scripts_General\Ability_Manager.cs" />
-     <Compile Include="Assets\Scripts\Scripts_General\Ability_Manager_Chris_try.cs" />
+     <Compile Include="Assets\Scripts\Scripts_General\Cam_Manager.cs" />
      <Compile Include="Assets\Scripts\Scripts_General\Direction.cs" />
      <Compile Include="Assets\Scripts\Scripts_Misc\AbilitySocket.cs" />
      <Compile Include="Assets\XInputDotNet\Examples\XInputTestCS.cs" />

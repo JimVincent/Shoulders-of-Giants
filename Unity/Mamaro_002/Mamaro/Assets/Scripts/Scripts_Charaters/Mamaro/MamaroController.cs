@@ -93,11 +93,11 @@ public class MamaroController : MonoBehaviour {
 		
 		if (state.DPad.Left == ButtonState.Pressed)
 		{
-			Ability_Manager_Chris_try.inst.SelectSocketLeft();
+			Ability_Manager.inst.SelectSocketLeft();
 		}
 		if (state.DPad.Right == ButtonState.Pressed)
 		{
-			Ability_Manager_Chris_try.inst.SelectSocketRight();
+			Ability_Manager.inst.SelectSocketRight();
 		}
 		//###################################
 		//Set Previous COntroller State
