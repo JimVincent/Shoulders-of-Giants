@@ -45,8 +45,12 @@ public class Script_Enemy_Melee : MonoBehaviour
 		case EnemyState.Stalking:
 			
 			break;
-			
-			// error catch
+
+		case EnemyState.Dead:
+
+			break;
+
+		// error catch
 		default:
 			Debug.LogError("Switch statement fell through. Please revise.");
 			break;

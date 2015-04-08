@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Script_Enemy_Ranged : MonoBehaviour 
 {
@@ -13,12 +14,15 @@ public class Script_Enemy_Ranged : MonoBehaviour
 	public float engagementRadius;
 	public float keptDistance;
 	public int lowHealthThreshold;
+	public float radius = 15.0F;
+	public float power = 20.0F;
 
 	// private vars
-	public int health;
+	public int health = 100;
 	public EnemyState state = EnemyState.Standby;
 	public bool alert = false;
 	public float distFrom;
+	public Rigidbody rb;
 
 	// test
 
@@ -26,13 +30,18 @@ public class Script_Enemy_Ranged : MonoBehaviour
 	void Start () 
 	{
 		mamaroM = Mamaro_Manager.inst;
+		rb = GetComponent<Rigidbody>();
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		
 		distFrom = Vector3.Distance(mamaroM.transform.position, this.transform.position);
+
+		///test////////
+		if(Input.GetKeyDown(KeyCode.F5))
+			OnTakeDamage(50);
+
 
 		switch (state) 
 		{
@@ -60,7 +69,6 @@ public class Script_Enemy_Ranged : MonoBehaviour
 					state = EnemyState.Stalking;
 			}
 
-
 			break;
 
 		// player is within engagment range. Enemy health is sufficient
@@ -84,7 +92,7 @@ public class Script_Enemy_Ranged : MonoBehaviour
 		}
 	}
 
-	// draw inspector gizoms
+	/// draw inspector gizoms
 	void OnDrawGizmos() 
 	{
 		// engagement radius
@@ -101,7 +109,76 @@ public class Script_Enemy_Ranged : MonoBehaviour
 
 	}
 
-	// returns a valid new position within the given range
+	/// reduces health and checks for death
+	public void OnTakeDamage(int amount)
+	{
+		//TODO play hit audio
+
+		// check if already dead
+		if(health > 0)
+		{
+			health -= amount;
+		}
+
+		// check for death
+		if(health <= 0)
+		{
+			// death sequence
+			//TODO play death audio
+			DetachChildren(this.transform);
+			//TODO apply particles
+			Explode();
+			Destroy(this);
+		}
+	}
+
+	/// Adds explosive force to surrounding rigid bodies
+	public void Explode()
+	{
+		Vector3 explosionPos = this.transform.position + transform.forward * 2;
+		Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);
+
+		foreach (Collider hit in colliders)
+		{
+			if (hit && hit.GetComponent<Rigidbody>())
+			{
+				hit.GetComponent<Rigidbody>().AddExplosionForce(power, explosionPos, radius, 1.0F, ForceMode.Impulse);
+			}
+		}
+	}
+
+	/// applies changes to children within parent
+	private void DetachChildren(Transform trans)
+	{
+		// is parent
+		if(trans.childCount > 0)
+		{
+			// run fo each child
+			foreach (Transform child in trans) 
+			{
+				DetachChildren(child);
+			}
+
+			// change parent
+			transform.DetachChildren();
+
+			// check for rigid body : Add
+			if(trans.GetComponent<Rigidbody>() == null)
+				trans.gameObject.AddComponent<Rigidbody>();
+
+			trans.gameObject.AddComponent<CapsuleCollider>();
+		}
+		else
+		{
+			// check for rigid body : Add
+			if(trans.GetComponent<Rigidbody>() == null)
+				trans.gameObject.AddComponent<Rigidbody>();
+
+			trans.gameObject.AddComponent<CapsuleCollider>();
+		}
+	}
+
+	/// returns a valid new position within the given range
 	private Vector3 GetNewPos(float range)
 	{
 		bool foundPath = false;
