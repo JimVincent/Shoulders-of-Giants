@@ -16,10 +16,14 @@ public class MamaroController : MonoBehaviour {
 	//############################################
 
 	MamaroMovement move;
+	Mamaro_Manager mamaro;
+	Script_QuickTime QT;
 
 	void Start()
 	{
 		move = MamaroMovement.inst;
+		mamaro = Mamaro_Manager.inst;
+		QT = Script_QuickTime.inst;
 	}
 
 	// Update is called once per frame
@@ -90,6 +94,13 @@ public class MamaroController : MonoBehaviour {
 			tempDir = move.moveDir;
 			tempDir = tempDir.normalized;
 			move.Dodge(tempDir);
+		}
+
+		// Quick Time controls
+		if(mamaro.isMalfunctioning)
+		{
+			if(state.Buttons.A == ButtonState.Pressed && prevState.Buttons.A == ButtonState.Released || Input.GetKeyDown(KeyCode.Space))
+				QT.Resist();
 		}
 		
 		

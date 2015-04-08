@@ -60,6 +60,7 @@
      <Compile Include="Assets\Scripts\Scripts_General\Ability_Manager.cs" />
      <Compile Include="Assets\Scripts\Scripts_General\Cam_Manager.cs" />
      <Compile Include="Assets\Scripts\Scripts_General\Direction.cs" />
+     <Compile Include="Assets\Scripts\Scripts_General\Script_QuickTime.cs" />
      <Compile Include="Assets\Scripts\Scripts_Misc\AbilitySocket.cs" />
      <Compile Include="Assets\XInputDotNet\Examples\XInputTestCS.cs" />
      <None Include="Assets\XInputDotNet\MITLicense.txt" />

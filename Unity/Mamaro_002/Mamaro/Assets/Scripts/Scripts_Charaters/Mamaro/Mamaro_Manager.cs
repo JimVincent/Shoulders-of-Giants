@@ -111,6 +111,12 @@ public class Mamaro_Manager : MonoBehaviour
 		}
 	}
 
+	/// returns the total amount of cores aquired
+	public int GetTotalCores()
+	{
+		return meleeCores + rangedCores + shieldCores + speedCores + abMan.GetSpareCount();
+	}
+
 	// links core values with Ability_Manager
 	private void UpdateCores()
 	{
