@@ -65,7 +65,9 @@ public class MamaroController : MonoBehaviour {
 		
 		//RightStickMovement
 		move.rotateEuler.y = state.ThumbSticks.Right.X;
-		
+
+	
+
 		//LeftStick Clicked
 		//if moveing and not run for to long
 		if (move.moveDir.magnitude > 0 && move.timerRun < move.runMaxTime)

@@ -3,6 +3,9 @@ using System.Collections;
 
 public class Mamaro_Manager : MonoBehaviour 
 {
+	// static instance
+	public static Mamaro_Manager inst;
+
 	// static class access
 	private Ability_Manager abMan;
 	private Cam_Manager cam;
@@ -14,9 +17,16 @@ public class Mamaro_Manager : MonoBehaviour
 	// non-inspector assigned vars
 	//[HideInInspector]
 	public int health;
+	public bool isMalfunctioning = false;
 
 	// private vars
 	public int meleeCores, speedCores, rangedCores, shieldCores;
+
+	void Awake()
+	{
+		if (inst == null)
+			inst = this;
+	}
 
 	// Use this for initialization
 	void Start () 
