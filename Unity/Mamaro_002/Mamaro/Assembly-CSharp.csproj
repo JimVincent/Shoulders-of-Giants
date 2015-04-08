@@ -50,11 +50,8 @@
      <Compile Include="Assets\Scripts\Scripts_Charaters\Enemy\Enemy_State_Enum.cs" />
      <Compile Include="Assets\Scripts\Scripts_Charaters\Enemy\Script_Enemy_Melee.cs" />
      <Compile Include="Assets\Scripts\Scripts_Charaters\Enemy\Script_Enemy_Ranged.cs" />
-<<<<<<< HEAD
      <Compile Include="Assets\Scripts\Scripts_Charaters\Enum_FearType.cs" />
-=======
      <Compile Include="Assets\Scripts\Scripts_Charaters\Lucy\Lucy_Manager.cs" />
->>>>>>> bc35cec55bd971dfad5e59d3adb0355bdd2a6d26
      <Compile Include="Assets\Scripts\Scripts_Charaters\Mamaro\MamaroController.cs" />
      <Compile Include="Assets\Scripts\Scripts_Charaters\Mamaro\MamaroMovement.cs" />
      <Compile Include="Assets\Scripts\Scripts_Charaters\Mamaro\Mamaro_Attack.cs" />
