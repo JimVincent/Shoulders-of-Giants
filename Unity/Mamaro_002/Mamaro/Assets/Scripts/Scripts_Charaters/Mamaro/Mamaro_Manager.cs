@@ -18,6 +18,7 @@ public class Mamaro_Manager : MonoBehaviour
 	//[HideInInspector]
 	public int health;
 	public bool isMalfunctioning = false;
+	public bool isBlocking = false;
 
 	// private vars
 	public int meleeCores, speedCores, rangedCores, shieldCores;
@@ -48,17 +49,20 @@ public class Mamaro_Manager : MonoBehaviour
 		if(Input.GetKeyDown(KeyCode.F4))		/////
 		{								   /////
 			int testDamage = largeDamage; /////
-			TakeDamage(testDamage);      /////
+			OnTakeDamage(testDamage);      /////
 		}							    /////
 		////////////////////////////////////
 	}
 
 	// applies damage of x amount
-	public void TakeDamage(int amount)
+	public void OnTakeDamage(int amount)
 	{
 		// check if any health
 		if(health > 0)
 		{
+			// let Lucy know
+
+
 			// check for dead
 			if(health - amount <= 0)
 			{
@@ -90,7 +94,7 @@ public class Mamaro_Manager : MonoBehaviour
 	}
 
 	// adds x amount to health
-	public void Repair(int amount)
+	public void OnRepair(int amount)
 	{
 		// check if health is full
 		if(health < maxHealth)

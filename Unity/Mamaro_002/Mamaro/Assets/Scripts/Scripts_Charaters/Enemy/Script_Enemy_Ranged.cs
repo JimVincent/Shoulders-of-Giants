@@ -10,14 +10,17 @@ public class Script_Enemy_Ranged : MonoBehaviour
 	// inspector assigned vars
 	public float moveSpeed;
 	public float sprintSpeed;
-	public float engagmentRadius;
+	public float engagementRadius;
+	public float keptDistance;
 	public int lowHealthThreshold;
 
 	// private vars
+	public int health;
 	public EnemyState state = EnemyState.Standby;
 	public bool alert = false;
 	public float distFrom;
 
+	// test
 
 	// Use this for initialization
 	void Start () 
@@ -38,15 +41,23 @@ public class Script_Enemy_Ranged : MonoBehaviour
 
 
 			// check if mamaro is within engagment range
-			if(!alert && distFrom < engagmentRadius)
+			if(!alert && distFrom < engagementRadius)
 				state = EnemyState.Offensive;
 
 			// wait for mamaro to stop malfunctioning
 			if(alert && !mamaroM.isMalfunctioning)
 			{
 				// check which state to revert to
-				if(distFrom < engagmentRadius)
-			state = EnemyState.
+				if(distFrom < engagementRadius)
+				{
+					// check health level
+					if(health <= lowHealthThreshold)
+						state = EnemyState.Defensive;
+					else
+						state = EnemyState.Offensive;
+				}
+				else
+					state = EnemyState.Stalking;
 			}
 
 
@@ -76,9 +87,18 @@ public class Script_Enemy_Ranged : MonoBehaviour
 	// draw inspector gizoms
 	void OnDrawGizmos() 
 	{
-		// Display the alert radius
-		Gizmos.color = Color.red;
-		Gizmos.DrawWireSphere(transform.position, engagmentRadius);
+		// engagement radius
+		Gizmos.color = Color.yellow;
+		Gizmos.DrawWireSphere(transform.position, engagementRadius);
+
+		// only show if in range
+		if(distFrom < engagementRadius)
+		{
+			// keptDistance radius
+			Gizmos.color = Color.red;
+			Gizmos.DrawWireSphere(mamaroM.transform.position, keptDistance);
+		}
+
 	}
 
 	// returns a valid new position within the given range
@@ -86,25 +106,37 @@ public class Script_Enemy_Ranged : MonoBehaviour
 	{
 		bool foundPath = false;
 		Vector3 tempV;
-		
+		float breakTimer = 0.0f;
+
 		// only return a clear path position
 		while(!foundPath)
 		{
-			// pick a pos within the specefied range
-			tempV = this.transform.position + Random.insideUnitSphere * moveRadius;
-
-
-			// check if point A and B have an obstacle in the way and less than desired angle
-			RaycastHit hit;
-			if(!Physics.Linecast(this.transform.position, tempV, out hit))
+			// break for constant loop defence
+			breakTimer += Time.deltaTime;
+			if(breakTimer > 2.0f)
 			{
-				foundPath = true;
-				return new Vector3(tempV.x, transform.position.y, tempV.z);
+				Debug.LogError("While loop was stuck in constant loop. Check you logic!");
+				return this.transform.position;
+			}
+
+			// pick a pos within the specefied range
+			tempV = this.transform.position + Random.insideUnitSphere * (engagementRadius / 2);
+
+			// within engagement range but out of keptDistance range
+			float tempDist = Vector3.Distance(mamaroM.transform.position, tempV);
+			if(tempDist > keptDistance && tempDist < engagementRadius)
+			{
+				// check if point A and B have an obstacle in the way and less than desired angle
+				RaycastHit hit;
+				if(!Physics.Linecast(this.transform.position, tempV, out hit))
+				{
+					foundPath = true;
+					return new Vector3(tempV.x, transform.position.y, tempV.z);
+				}
 			}
 		}
-		
-		// Error default pos
-		return transform.position;
+
+		return this.transform.position;
 	}
 
 }
