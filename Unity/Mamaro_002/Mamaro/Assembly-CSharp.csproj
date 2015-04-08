@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\ObjectExports\ObjExporterScript.cs" />
-     <Compile Include="Assets\Scripts\Scripts_Charaters\Enemy\Enemy_State_Enum.cs" />
+     <Compile Include="Assets\Scripts\Scripts_Charaters\Enemy\Enum_EnemyState.cs" />
      <Compile Include="Assets\Scripts\Scripts_Charaters\Enemy\Script_Enemy_Melee.cs" />
      <Compile Include="Assets\Scripts\Scripts_Charaters\Enemy\Script_Enemy_Ranged.cs" />
      <Compile Include="Assets\Scripts\Scripts_Charaters\Enum_FearType.cs" />
@@ -60,7 +60,9 @@
      <Compile Include="Assets\Scripts\Scripts_General\Ability_Manager.cs" />
      <Compile Include="Assets\Scripts\Scripts_General\Cam_Manager.cs" />
      <Compile Include="Assets\Scripts\Scripts_General\Direction.cs" />
+     <Compile Include="Assets\Scripts\Scripts_General\Script_QuickTime.cs" />
      <Compile Include="Assets\Scripts\Scripts_Misc\AbilitySocket.cs" />
+     <Compile Include="Assets\Scripts\Scripts_Misc\FusionCore.cs" />
      <Compile Include="Assets\XInputDotNet\Examples\XInputTestCS.cs" />
      <None Include="Assets\XInputDotNet\MITLicense.txt" />
  <Reference Include="UnityEngine.UI">

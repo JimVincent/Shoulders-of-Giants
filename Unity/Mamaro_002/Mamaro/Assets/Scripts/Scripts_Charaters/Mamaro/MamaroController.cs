@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 using XInputDotNetPure; // Required in C#
+using System.Collections.Generic;
 
 public class MamaroController : MonoBehaviour {
 
 	public enum ControllerType{Keyboard, Contoller};
 
 	public ControllerType InputDevice;
+
+	public static MamaroController inst;
 	//###########################################
 	//Required For X Input
 	bool playerIndexSet = false;
@@ -16,10 +19,26 @@ public class MamaroController : MonoBehaviour {
 	//############################################
 
 	MamaroMovement move;
+	Mamaro_Manager mamaro;
+	Script_QuickTime QT;
+
+	public List<FusionCore> fusionCores;
+
+
+
+	void Awake()
+	{
+		if (inst == null)
+		{
+			inst = this;
+		}
+	}
 
 	void Start()
 	{
 		move = MamaroMovement.inst;
+		mamaro = Mamaro_Manager.inst;
+		QT = Script_QuickTime.inst;
 	}
 
 	// Update is called once per frame
@@ -91,7 +110,36 @@ public class MamaroController : MonoBehaviour {
 			tempDir = tempDir.normalized;
 			move.Dodge(tempDir);
 		}
-		
+
+		// Quick Time controls
+		if(mamaro.isMalfunctioning)
+		{
+			if(state.Buttons.A == ButtonState.Pressed && prevState.Buttons.A == ButtonState.Released || Input.GetKeyDown(KeyCode.Space))
+				QT.Resist();
+		}
+
+
+		//Interact With Cores
+		if (fusionCores.Count > 0)
+		{
+			//PickupCores
+			if (state.Buttons.X == ButtonState.Pressed)
+			{
+				fusionCores[0].DestroyCore();
+
+			}
+			else if (state.Buttons.Y == ButtonState.Pressed)
+			{
+				fusionCores[0].CollectCore();
+			}
+		}
+
+
+
+
+
+
+
 		
 		if (state.DPad.Left == ButtonState.Pressed)
 		{
@@ -101,6 +149,13 @@ public class MamaroController : MonoBehaviour {
 		{
 			Ability_Manager.inst.SelectSocketRight();
 		}
+
+
+
+
+
+
+
 		//###################################
 		//Set Previous COntroller State
 		prevState = state;

@@ -9,6 +9,7 @@ public class Mamaro_Manager : MonoBehaviour
 	// static class access
 	private Ability_Manager abMan;
 	private Cam_Manager cam;
+	private Lucy_Manager lucy;
 
 	// inspector assigned vars
 	public int maxHealth = 100;
@@ -35,6 +36,7 @@ public class Mamaro_Manager : MonoBehaviour
 		abMan = Ability_Manager.inst;
 		cam = Cam_Manager.inst;
 		health = maxHealth;
+		lucy = Lucy_Manager.inst;
 	}
 	
 	// Update is called once per frame
@@ -46,10 +48,10 @@ public class Mamaro_Manager : MonoBehaviour
 		////////////////////////////////////////////
 		/// Testing damage function	///////////////
 		//////////////////////////////////////////
-		if(Input.GetKeyDown(KeyCode.F4))		/////
+		if(Input.GetKeyDown(KeyCode.F4))	/////
 		{								   /////
 			int testDamage = largeDamage; /////
-			OnTakeDamage(testDamage);      /////
+			OnTakeDamage(testDamage);    /////
 		}							    /////
 		////////////////////////////////////
 	}
@@ -61,7 +63,7 @@ public class Mamaro_Manager : MonoBehaviour
 		if(health > 0)
 		{
 			// let Lucy know
-
+			lucy.OnChangeFear(FearType.Damage);
 
 			// check for dead
 			if(health - amount <= 0)
@@ -107,6 +109,12 @@ public class Mamaro_Manager : MonoBehaviour
 
 			//TODO play fixing audio here
 		}
+	}
+
+	/// returns the total amount of cores aquired
+	public int GetTotalCores()
+	{
+		return meleeCores + rangedCores + shieldCores + speedCores + abMan.GetSpareCount();
 	}
 
 	// links core values with Ability_Manager

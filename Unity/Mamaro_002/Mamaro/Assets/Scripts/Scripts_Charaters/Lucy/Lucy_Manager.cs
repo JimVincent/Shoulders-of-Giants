@@ -3,10 +3,10 @@ using System.Collections;
 
 public class Lucy_Manager : MonoBehaviour {
 
-	public enum LucyState{Idle, Repair, Scared, Frightened, Tapping};
+	public enum LucyState{Idle, Repair, Scared, Petrified, Tapping};
 	public static Lucy_Manager inst;
 
-	LucyState state;
+	public LucyState state;
 	Mamaro_Manager mamaro;
 	GameObject lucyTapping;
 
@@ -14,6 +14,20 @@ public class Lucy_Manager : MonoBehaviour {
 	public int fearMax;
 	public int fearScaredLevel;
 	public int fearFrightenedLevel;
+
+	public float fearDecreaseTime;
+	public float timerFearDecrease;
+
+	public float repairDelay;//The time after takeing fear damage untill recharge begins.
+	public float timerRepairDelay;//timer for the delay on recharge
+
+	public float repairInterval;//The timer in between when lucy is scared and repairing.
+	public float timerRepair;
+
+	public int repairAmountRepair;//The Amount that lucy repairs mamaro
+	public int repairAmountScared;//The Amount that lucy repairs mamar While in scared mode
+
+	public bool isRepairing;
 
 	void Awake()
 	{
@@ -25,16 +39,34 @@ public class Lucy_Manager : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
+		fear = 0;
 		mamaro = Mamaro_Manager.inst;
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
+		if (fear > 0)
+		{
+			timerFearDecrease += Time.deltaTime;
+			if (timerFearDecrease > fearDecreaseTime)
+			{
+				OnChangeFear(FearType.Decrease);
+				timerFearDecrease = 0;
+			}
+				if (fear < 0)
+			{
+				fear = 0;
+			}
+		}
+
+		//Check to see if mamaro is in malfuntioning quicktime event.
 		if (mamaro.isMalfunctioning)
 		{
 			ChangeState(LucyState.Tapping);
 		}
+
+		//Switch for each of Lucy's Staes.
 		switch (state)
 		{
 		case LucyState.Idle:
@@ -46,22 +78,54 @@ public class Lucy_Manager : MonoBehaviour {
 		case LucyState.Scared:
 			Scared();
 			break;
-		case LucyState.Frightened:
-			Frightened ();
+		case LucyState.Petrified:
+			Petrified ();
 			break;
 		case LucyState.Tapping:
 			Tapping ();
 			break;
 		}
+
+		///////////////////////////////////////////////////
+		/// Input Hacks                                 //
+		///                                            //
+		if (Input.GetKeyDown(KeyCode.P))              //
+		{                                            //
+			OnChangeFear(FearType.Damage);          //
+		}                                          //
+		if (Input.GetKeyDown(KeyCode.O))          //
+		{                                        //
+			mamaro.health -= 20;                //
+		}                                      //
+		////////////////////////////////////////
+
+
+
+
+
 	}
 
+	//Allows the Fear Meter to be increased or decreased.
 	public void OnChangeFear(FearType fearType)
 	{
-		fear += fearType;
+		if (fear <= fearMax && fear >= 0)
+		{
+			fear += (int)fearType;
+		}
+		if (fear > fearMax)
+		{
+			fear = fearMax;
+		}
+		else if (fear < 0)
+		{
+			fear = 0;
+		}
+
+
 
 		if (fear > fearFrightenedLevel)
 		{
-			ChangeState(LucyState.Frightened);
+			ChangeState(LucyState.Petrified);
 		}
 		else if(fear > fearScaredLevel)
 		{
@@ -73,51 +137,60 @@ public class Lucy_Manager : MonoBehaviour {
 		}
 	}
 
-
+	/// <summary>
+	/// Lucy's Idle State
+	/// </summary>
+	// Allows Lucy to Run Idle Animation
+	// Change to Repair if Mamaro looses health
+	// Play Lucy Audio
 	void Idle()
 	{
-		if (fear > fearScaredLevel)
-		{
-			ChangeState(LucyState.Scared);
-		}
-		else if (mamaro.health < mamaro.maxHealth)
+		if (mamaro.health < mamaro.maxHealth)
 		{
 			ChangeState(LucyState.Repair);
 		}
 	}
 
+	/// <summary>
+	/// Lucy's Repair State
+	/// </summary>
+	/// Plays Repair Animation
+	/// Slowly Repairs Mamaro
 	void Repair()
 	{
-		if (fear > fearScaredLevel)
-		{
-			ChangeState(LucyState.Scared);
-		}
-		else if (mamaro.health == mamaro.maxHealth)
+		if (mamaro.health == mamaro.maxHealth)
 		{
 			ChangeState(LucyState.Idle);
 		}
+
+		RepairMamaro(repairAmountRepair);
+
 	}
 
+	/// <summary>
+	/// Scared this instance.
+	/// </summary>
+	/// Repairs Mamaro Intermitently
+	/// Swaps between repai animaion and Scared Animation.
 	void Scared()
 	{
-		if (fear > fearFrightenedLevel)
-		{
-			ChangeState(LucyState.Frightened);
-		}
-		else if (fear < fearScaredLevel)
-		{
-			ChangeState(LucyState.Idle);
-		}
+		RepairMamaro(repairAmountScared);
 	}
 
-	void Frightened()
+	/// <summary>
+	/// Lucy's Petrified State
+	/// </summary>
+	/// Plays Petrified Animation
+	/// will not repair mamaro
+	void Petrified()
 	{
-		if (fear < fearFrightenedLevel)
-		{
-			ChangeState(LucyState.Scared);
-		}
+
 	}
 
+	/// <summary>
+	/// For Use when entering Maamaros Quick time event
+	/// </summary>
+	/// Activates Lucy's Tapping Gameobject on mamaros eye lens
 	void Tapping()
 	{
 		if (!mamaro.isMalfunctioning)
@@ -126,9 +199,13 @@ public class Lucy_Manager : MonoBehaviour {
 		}
 	}
 
-	void ChangeState(LucyState ls)
+	/// <summary>
+	/// Changes the state.
+	/// </summary>
+	/// <param name="lState">lState.</param>
+	void ChangeState(LucyState lState)
 	{
-		switch (ls)
+		switch (lState)
 		{
 		case LucyState.Idle:
 			break;
@@ -136,12 +213,37 @@ public class Lucy_Manager : MonoBehaviour {
 			break;
 		case LucyState.Scared:
 			break;
-		case LucyState.Frightened:
+		case LucyState.Petrified:
 			break;
 		case LucyState.Tapping:
 			break;
 		}
-		state = ls;
+		state = lState;
+	}
+
+
+	/// <summary>
+	/// Modifies mamaros health
+	/// </summary>
+	/// <param name="amount">Amount.</param>
+	void RepairMamaro(int amount)
+	{
+		timerRepair += Time.deltaTime;
+		
+		//Reparing
+		if (timerRepair > repairInterval)
+		{
+			if (mamaro.health < mamaro.maxHealth)
+			{
+				mamaro.health += amount;
+				timerRepair -= repairInterval;
+			}
+
+			if (mamaro.health > mamaro.maxHealth)
+			{
+				mamaro.health = mamaro.maxHealth;
+			}
+		}
 	}
 }
 

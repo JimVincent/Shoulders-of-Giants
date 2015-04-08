@@ -252,6 +252,12 @@ public class Ability_Manager : MonoBehaviour
 			}
 		}
 	}
+
+	/// returns spare core count
+	public int GetSpareCount()
+	{
+		return spareCores;
+	}
 	
 	///Returns Angle for Given Socket
 	int GetSocketAngle(int socketNum)
