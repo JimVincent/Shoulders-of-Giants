@@ -38,7 +38,7 @@ public class FusionCore : MonoBehaviour {
 	public void CollectCore()
 	{
 		timerPickup += Time.deltaTime / pickupTime;
-		buttonX.localScale = Vector3.one * (intSize + timerPickup);
+		buttonY.localScale = Vector3.one * (intSize + timerPickup);
 
 		if (timerPickup > 1f)
 		{
@@ -53,7 +53,7 @@ public class FusionCore : MonoBehaviour {
 	public void DestroyCore()
 	{
 		timerPickup += Time.deltaTime / pickupTime;
-		buttonY.localScale = Vector3.one * (intSize + timerPickup);
+		buttonX.localScale = Vector3.one * (intSize + timerPickup);
 
 		if (timerPickup > 1f)
 		{
