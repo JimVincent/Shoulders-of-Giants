@@ -3,6 +3,9 @@ using System.Collections;
 
 public class Mamaro_Attack : MonoBehaviour 
 {
+	// static instance
+	public static Mamaro_Attack inst;
+
 	//inspector assigned vars
 	public int maxAttack, maxRangedCoolDown;
 	[Range(15.0f, 30.0f)]
@@ -21,6 +24,10 @@ public class Mamaro_Attack : MonoBehaviour
 	// Use this for initialization
 	void Awake() 
 	{
+		// assign static instance
+		if (inst == null)
+			inst = this;
+
 		anim = GetComponentInChildren<Animator>();
 		fistCollider.enabled = false;
 	}
@@ -71,9 +78,6 @@ public class Mamaro_Attack : MonoBehaviour
 		}
 		else
 		{
-			//punchCharge = 0.0f;	// button let go looses charge ??????
-			// or
-			// reduce at half charge rate until empty
 			if(punchCharge > 0.0f)
 			{
 				punchCharge -= Time.deltaTime * (chargeRate / 2); 
@@ -131,9 +135,6 @@ public class Mamaro_Attack : MonoBehaviour
 		}
 		else 
 		{
-			//rangedCharge = 0.0f;	// button let go looses charge ??????
-			// or
-			// reduce at half charge rate until empty
 			if(rangedCharge > 0.0f)
 			{
 				rangedCharge -= Time.deltaTime * (chargeRate / 2);

@@ -14,6 +14,7 @@ public class Mamaro_Manager : MonoBehaviour
 	// inspector assigned vars
 	public int maxHealth = 100;
 	public int smallDamage, mediumDamage, largeDamage;	// in regards to how much cam shake to apply
+	public Vector3 camMalfuncPos;
 
 	// non-inspector assigned vars
 	//[HideInInspector]
@@ -42,7 +43,7 @@ public class Mamaro_Manager : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		// update all ability cores
+		// update local ability vars from abMan
 		UpdateCores();
 
 		////////////////////////////////////////////
@@ -51,7 +52,8 @@ public class Mamaro_Manager : MonoBehaviour
 		if(Input.GetKeyDown(KeyCode.F4))	/////
 		{								   /////
 			int testDamage = largeDamage; /////
-			OnTakeDamage(testDamage);    /////
+			OnTakeDamage(testDamage);
+			OnMalfunction();
 		}							    /////
 		////////////////////////////////////
 	}
@@ -63,7 +65,7 @@ public class Mamaro_Manager : MonoBehaviour
 		if(health > 0)
 		{
 			// let Lucy know
-			lucy.OnChangeFear(FearType.Damage);
+			//lucy.OnChangeFear(FearType.Damage);
 
 			// check for dead
 			if(health - amount <= 0)
@@ -93,6 +95,13 @@ public class Mamaro_Manager : MonoBehaviour
 				}
 			}
 		}
+	}
+
+	// changes to malfunction mode
+	public void OnMalfunction()
+	{
+		isMalfunctioning = true;
+		cam.LerpTo(camMalfuncPos);
 	}
 
 	// adds x amount to health

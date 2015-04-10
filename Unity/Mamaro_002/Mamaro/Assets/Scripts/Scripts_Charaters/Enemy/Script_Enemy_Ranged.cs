@@ -136,7 +136,6 @@ public class Script_Enemy_Ranged : MonoBehaviour
 		{
 			// face destPos
 			LookTowards(destPos);
-			Vector3 pPos = transform.localPosition;
 			transform.Translate(-transform.forward * speed * Time.deltaTime);// = new Vector3(pPos.x, pPos.y, pPos.z - speed * Time.deltaTime);
 		}
 		else

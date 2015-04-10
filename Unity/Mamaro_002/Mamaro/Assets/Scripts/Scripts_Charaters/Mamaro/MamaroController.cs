@@ -114,7 +114,7 @@ public class MamaroController : MonoBehaviour {
 		// Quick Time controls
 		if(mamaro.isMalfunctioning)
 		{
-			if(state.Buttons.A == ButtonState.Pressed && prevState.Buttons.A == ButtonState.Released || Input.GetKeyDown(KeyCode.Space))
+			if(state.Buttons.A == ButtonState.Pressed && prevState.Buttons.A == ButtonState.Released)
 				QT.Resist();
 		}
 
@@ -194,6 +194,13 @@ public class MamaroController : MonoBehaviour {
 			tempDir = move.moveDir;
 			tempDir = tempDir.normalized;
 			move.Dodge(tempDir);
+		}
+
+		// Quick Time controls
+		if(mamaro.isMalfunctioning)
+		{
+			if(Input.GetKeyDown(KeyCode.Space))
+				QT.Resist();
 		}
 		
 		
