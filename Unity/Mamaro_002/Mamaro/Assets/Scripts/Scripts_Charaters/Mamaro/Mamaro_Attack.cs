@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Mamaro_Attack : MonoBehaviour 
 {
+	public static Mamaro_Attack inst;
+
 	//inspector assigned vars
 	public int maxAttack, maxRangedCoolDown;
 	[Range(15.0f, 30.0f)]
@@ -13,6 +15,9 @@ public class Mamaro_Attack : MonoBehaviour
 	public bool isAttacking = false;
 	public float punchCharge = 0.0f, rangedCharge = 0.0f;
 
+	public bool isChargePunch = false;
+	public bool isChargeRange = false;
+
 
 	//Animation Variables
 	Animator anim;
@@ -21,6 +26,10 @@ public class Mamaro_Attack : MonoBehaviour
 	// Use this for initialization
 	void Awake() 
 	{
+		if (inst == null)	
+		{
+			inst = this;
+		}
 		anim = GetComponentInChildren<Animator>();
 		fistCollider.enabled = false;
 	}
@@ -42,6 +51,7 @@ public class Mamaro_Attack : MonoBehaviour
 
 	}
 
+
 	// applies punch attack sequence
 	private void PunchAttack()
 	{
@@ -58,15 +68,36 @@ public class Mamaro_Attack : MonoBehaviour
 	private void ChargePunch()
 	{
 		// receive held input
-		if(Input.GetKey(KeyCode.E))
+		if(isChargePunch)
 		{
-			if(punchCharge < 100.0f)
+			if(!isAttacking)
 			{
-				punchCharge += Time.deltaTime * chargeRate;
+				if (punchCharge == 0)
+				{
+					//Set Animation to start
+					anim.SetBool("Bool_MeeleCharge", true);
 
-				// limit to max of 100
-				if(punchCharge > 100.0f)
-					punchCharge = 100.0f;
+					punchCharge += 20;
+				}
+
+				if(punchCharge < 100.0f)
+				{
+					punchCharge += Time.deltaTime * chargeRate;
+
+					// limit to max of 100
+					if(punchCharge > 100.0f)
+						punchCharge = 100.0f;
+				}
+			}
+			else
+			{
+				punchCharge -= Time.deltaTime * (chargeRate * 2f);
+				
+				if(punchCharge < 0.0f)
+				{
+					isAttacking = false;
+					punchCharge = 0.0f;
+				}
 			}
 		}
 		else
@@ -76,11 +107,28 @@ public class Mamaro_Attack : MonoBehaviour
 			// reduce at half charge rate until empty
 			if(punchCharge > 0.0f)
 			{
-				punchCharge -= Time.deltaTime * (chargeRate / 2); 
+				if (!isAttacking)
+				{
+					isAttacking = true;
+					
+					//Set Animation to start
+						anim.SetTrigger("Trig_MeeleAttack");
+						anim.SetBool("Bool_MeeleCharge", false);
+
+				}
+
+				
+				// turn on fist collider
+				fistCollider.enabled = true;
+
+				punchCharge -= Time.deltaTime * (chargeRate * 2f); 
 
 				// don't drop below 0.0f
 				if(punchCharge < 0.0f)
+				{
+					isAttacking = false;
 					punchCharge = 0.0f;
+				}
 			}
 		}
 	}
@@ -88,45 +136,36 @@ public class Mamaro_Attack : MonoBehaviour
 	// adds ranged charge from 0 to 100 in respects to time held
 	private void ChargeRanged()
 	{
-
-		if (Input.GetKeyDown(KeyCode.Q))
-		{
-			//Set Animation to start
-			anim.SetBool("Bool_RangedCharge", true);
-		}
-		else if (Input.GetKeyUp(KeyCode.Q))
-		{
-			//Set Animation to start
-			anim.SetTrigger("Trig_RangedAttack");
-			anim.SetBool("Bool_RangedCharge", false);
-		}
-
-		if (Input.GetKeyDown(KeyCode.E))
-		{
-			//Set Animation to start
-			anim.SetBool("Bool_MeeleCharge", true);
-		}
-		else if (Input.GetKeyUp(KeyCode.E))
-		{
-			//Set Animation to start
-			anim.SetTrigger("Trig_MeeleAttack");
-			anim.SetBool("Bool_MeeleCharge", false);
-
-			// turn on fist collider
-			fistCollider.enabled = true;
-		}
-
-
 		// receive held input
-		if(Input.GetKey(KeyCode.Q))
+		if(isChargeRange)
 		{
-			if(rangedCharge < 100.0f)
+			if (!isAttacking)
 			{
-				rangedCharge += Time.deltaTime * chargeRate;
-				
-				// limit to max of 100
-				if(rangedCharge > 100.0f)
-					rangedCharge = 100.0f;
+				if (rangedCharge == 0)
+				{
+					//Set Animation to start
+					anim.SetBool("Bool_RangedCharge", true);
+					rangedCharge += 30;
+				}
+
+				if(rangedCharge < 100.0f)
+				{
+					rangedCharge += Time.deltaTime * chargeRate;
+					
+					// limit to max of 100
+					if(rangedCharge > 100.0f)
+						rangedCharge = 100.0f;
+				}
+			}
+			else
+			{
+				rangedCharge -= Time.deltaTime * (chargeRate * 2f);
+
+				if(rangedCharge < 0.0f)
+				{
+					isAttacking = false;
+					rangedCharge = 0.0f;
+				}
 			}
 		}
 		else 
@@ -136,9 +175,23 @@ public class Mamaro_Attack : MonoBehaviour
 			// reduce at half charge rate until empty
 			if(rangedCharge > 0.0f)
 			{
-				rangedCharge -= Time.deltaTime * (chargeRate / 2);
+				if (!isAttacking)
+				{
+					isAttacking = true;
+					//Set Animation to start
+
+						anim.SetTrigger("Trig_RangedAttack");
+						anim.SetBool("Bool_RangedCharge", false);
+
+				}
+
+				rangedCharge -= Time.deltaTime * (chargeRate * 2f);
+
 				if(rangedCharge < 0.0f)
+				{
+					isAttacking = false;
 					rangedCharge = 0.0f;
+				}
 			}
 		}
 	}
