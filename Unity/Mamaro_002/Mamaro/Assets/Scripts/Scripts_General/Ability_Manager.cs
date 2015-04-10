@@ -111,6 +111,14 @@ public class Ability_Manager : MonoBehaviour
 		sockets[3].SetActiveCores(shield);
 		spareCores = spare;
 	}
+
+	/// adds core to spare cores
+	public void AddSpareCore()
+	{
+		//TODO apply some particles or visual notice
+		//TODO play adding audio
+		spareCores++;
+	}
 	
 	// keeps spare core text updated
 	private void UpdateSparetext()
