@@ -7,6 +7,7 @@ public class Mamaro_Manager : MonoBehaviour
 	public static Mamaro_Manager inst;
 
 	// static class access
+	private Game_Manager GM;
 	private Ability_Manager abMan;
 	private Cam_Manager cam;
 	private Lucy_Manager lucy;
@@ -34,6 +35,7 @@ public class Mamaro_Manager : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+		GM = Game_Manager.inst;
 		abMan = Ability_Manager.inst;
 		cam = Cam_Manager.inst;
 		health = maxHealth;
@@ -51,8 +53,8 @@ public class Mamaro_Manager : MonoBehaviour
 		//////////////////////////////////////////
 		if(Input.GetKeyDown(KeyCode.F4))	/////
 		{								   /////
-			int testDamage = largeDamage; /////
-			OnTakeDamage(testDamage);
+			//int testDamage = largeDamage; /////
+			//OnTakeDamage(testDamage);
 			OnMalfunction();
 		}							    /////
 		////////////////////////////////////
@@ -97,11 +99,12 @@ public class Mamaro_Manager : MonoBehaviour
 		}
 	}
 
-	// changes to malfunction mode
+	/// triggers malfunction sequence
 	public void OnMalfunction()
 	{
+		abMan.AddSpareCore();
 		isMalfunctioning = true;
-		cam.LerpTo(camMalfuncPos);
+		GM.MalfunctionMode(true);
 	}
 
 	// adds x amount to health

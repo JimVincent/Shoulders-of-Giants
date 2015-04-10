@@ -29,9 +29,9 @@ public class Ability_Manager : MonoBehaviour
 	private string rotDir;
 
 	// vars for socket slider
-	public bool shownOnce = false;
-	public bool showSocket = false;
-	public float sHangTimer = 0.0f;
+	private bool shownOnce = true;
+	private bool showSocket = false;
+	private float sHangTimer = 0.0f;
 	
 	void Awake()
 	{
@@ -59,8 +59,7 @@ public class Ability_Manager : MonoBehaviour
 
 		//TODO add in gate for if pause here
 		// allow user input control
-		currentAngle = controlPanel_Parent.transform.rotation.eulerAngles.z;
-		//InputControl();
+		InputControl();
 
 		// in position
 		if((int)currentAngle == GetSocketAngle(selectedSocket))
@@ -81,7 +80,7 @@ public class Ability_Manager : MonoBehaviour
 					SlideSocket(sockets[selectedSocket].socketImage, sockets[selectedSocket].enabledPos, sockets[selectedSocket].disabledPos);
 					sHangTimer = 0.0f;
 					showSocket = false;
-					shownOnce = false;
+					shownOnce = true;
 				}
 			}
 		}
@@ -113,25 +112,12 @@ public class Ability_Manager : MonoBehaviour
 		spareCores = spare;
 	}
 
-	public AbilitySocket GetSocket(Sockets type)
+	/// adds core to spare cores
+	public void AddSpareCore()
 	{
-		switch (type)
-		{
-		case Sockets.Melee:
-			return sockets[0];
-			break;
-		case Sockets.Speed:
-			return sockets[1];
-			break;
-		case Sockets.Ranged:
-			return sockets[2];
-			break;
-		case Sockets.Shield:
-			return sockets[3];
-			break;
-		}
-		Debug.Log("Get Socket <" + type.ToString() + "> Does Not Exist");
-		return null;
+		//TODO apply some particles or visual notice
+		//TODO play adding audio
+		spareCores++;
 	}
 	
 	// keeps spare core text updated
@@ -209,69 +195,12 @@ public class Ability_Manager : MonoBehaviour
 			rotDir = "Right";
 		}
 	}
-
-	public void SocketAdd()
-	{
-
-		// add cores to selected
-		if(showSocket)
-		{
-			// check if already full
-			if(sockets[selectedSocket].GetCoreCount() < 4)
-			{
-				// add from spares
-				if(spareCores > 0)
-				{
-					sockets[selectedSocket].AddCore();
-					spareCores--;
-				}
-				else if(sockets[selectedSocket].oppositeSocket.GetCoreCount() > 0)
-				{
-					// add from opposite
-					sockets[selectedSocket].oppositeSocket.RemoveCore();
-					sockets[selectedSocket].AddCore();
-				}
-			}
-			sHangTimer = 0.0f;
-		}
-		
-		// show only once per rotation or up input
-		if(!shownOnce)
-		{
-			showSocket = true;
-			shownOnce = true;
-		}
-	}
 	
-	
-	
-	public void SocketRemove()
-	{
-		if(showSocket)
-		{
-			// check for empty
-			if(sockets[selectedSocket].GetCoreCount() > 0)
-			{
-				// remove core and reset sHangTimer
-				sockets[selectedSocket].RemoveCore();
-				spareCores++;
-			}
-			sHangTimer = 0.0f;
-		}
-		
-		// show only once per rotation or up input
-		if(!shownOnce)
-		{
-			showSocket = true;
-			shownOnce = true;
-		}
-	}
 	/// allows user input to control rotation and core adding/removing cores
 	private void InputControl()
 	{
-
-
-		/*
+		currentAngle = controlPanel_Parent.transform.rotation.eulerAngles.z;
+		
 		// input for which way to rotate
 		if(Input.GetKeyDown(KeyCode.LeftArrow))
 		{
@@ -283,9 +212,53 @@ public class Ability_Manager : MonoBehaviour
 			showSocket = true;
 			SelectSocketRight();
 		}
-		*/
 
+		///////////////////////////////////////////////////////////////////
 
+		// input to add and remove cores
+		if(!isRotating)
+		{
+			// add cores to selected
+			if(Input.GetKeyDown(KeyCode.UpArrow) && showSocket)
+			{
+				// check if already full
+				if(sockets[selectedSocket].GetCoreCount() < 4)
+				{
+					// add from spares
+					if(spareCores > 0)
+					{
+						sockets[selectedSocket].AddCore();
+						spareCores--;
+					}
+					else if(sockets[selectedSocket].oppositeSocket.GetCoreCount() > 0)
+					{
+						// add from opposite
+						sockets[selectedSocket].oppositeSocket.RemoveCore();
+						sockets[selectedSocket].AddCore();
+					}
+				}
+				sHangTimer = 0.0f;
+			}
+
+			if(Input.GetKeyDown(KeyCode.DownArrow) && showSocket)
+			{
+				// check for empty
+				if(sockets[selectedSocket].GetCoreCount() > 0)
+				{
+					// remove core and reset sHangTimer
+					sockets[selectedSocket].RemoveCore();
+					spareCores++;
+				}
+				sHangTimer = 0.0f;
+			}
+
+			// show only once per rotation or up input
+			if(!shownOnce || Input.GetKeyDown(KeyCode.UpArrow))
+			{
+				showSocket = true;
+				shownOnce = true;
+			}
+		}
 	}
 
 	/// returns spare core count
