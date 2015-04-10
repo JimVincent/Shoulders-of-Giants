@@ -137,6 +137,28 @@ public class MamaroController : MonoBehaviour {
 
 
 
+		//Punch Attack
+		if (state.Buttons.RightShoulder == ButtonState.Pressed && !Mamaro_Attack.inst.isChargeRange)
+		{
+			Mamaro_Attack.inst.isChargePunch = true;
+		}
+		else
+		{
+			Mamaro_Attack.inst.isChargePunch = false;
+		}
+
+		//Range Attack
+		if (state.Buttons.LeftShoulder == ButtonState.Pressed && !Mamaro_Attack.inst.isChargePunch)
+		{
+			Mamaro_Attack.inst.isChargeRange = true;
+		}
+		else
+		{
+			Mamaro_Attack.inst.isChargeRange = false;
+		}
+
+
+
 
 
 
