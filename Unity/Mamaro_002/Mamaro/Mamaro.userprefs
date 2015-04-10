@@ -1,9 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Scripts_Misc\FusionCore.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Scripts_General\Ability_Manager.cs">
     <Files>
-      <File FileName="Assets\Scripts\Scripts_Misc\FusionCore.cs" Line="85" Column="5" />
-      <File FileName="Assets\Scripts\Scripts_Charaters\Mamaro\MamaroController.cs" Line="122" Column="24" />
+      <File FileName="Assets\Scripts\Scripts_Charaters\Enemy\Script_Enemy_Ranged.cs" Line="36" Column="38" />
+      <File FileName="Assets\Scripts\Scripts_Charaters\Mamaro\MamaroController.cs" Line="206" Column="6" />
+      <File FileName="Assets\Scripts\Scripts_General\Ability_Manager.cs" Line="232" Column="23" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
