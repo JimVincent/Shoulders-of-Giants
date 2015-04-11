@@ -66,6 +66,7 @@
      <Compile Include="Assets\Scripts\Scripts_Misc\AbilitySocket.cs" />
      <Compile Include="Assets\Scripts\Scripts_Misc\FusionCore.cs" />
      <Compile Include="Assets\Scripts\Tutorials\Tutorial_Movement.cs" />
+     <Compile Include="Assets\Scripts\Tutorials\Tutorial_StatSelect.cs" />
      <Compile Include="Assets\XInputDotNet\Examples\XInputTestCS.cs" />
      <None Include="Assets\XInputDotNet\MITLicense.txt" />
  <Reference Include="UnityEngine.UI">
