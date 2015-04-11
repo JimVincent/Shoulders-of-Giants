@@ -1,8 +1,5 @@
 fileFormatVersion: 2
-guid: ea895df4f09804d47ac0a43ce22418cb
-<<<<<<< HEAD
-DefaultImporter:
-=======
+guid: bbceb1b00a2e35849a7020d601589c40
 timeCreated: 1428719449
 licenseType: Free
 PluginImporter:
@@ -14,7 +11,6 @@ PluginImporter:
     Any:
       enabled: 1
       settings: {}
->>>>>>> 779b1b39bb6852a4e24e0a1e1ab49c79451131b1
   userData: 
   assetBundleName: 
   assetBundleVariant: 

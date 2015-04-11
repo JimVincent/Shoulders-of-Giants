@@ -55,17 +55,16 @@ public class Script_QuickTime : MonoBehaviour
 			// increase malfunction percent in respects to total cores
 			malPercent += Time.deltaTime * mamaro.GetTotalCores() * difficultyOffset;
 		}
-
-
-
-
 	}
 
 	/// receives input
 	public void Resist()
 	{
-		print ("hit");
-		malPercent -= resistRate;
+		// shouldn't fall below zero
+		if(malPercent - resistRate <= 0.0f)
+			malPercent = 0.0f;
+		else
+			malPercent -= resistRate;
 	}
 
 	/// alternates the sprite of the button image

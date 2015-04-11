@@ -10,33 +10,36 @@ public class Script_Enemy_Ranged : MonoBehaviour
 
 	// inspector assigned vars
 	public float moveSpeed;
-	public float sprintSpeed;
+	public float rotSpeed;
+	public float catchUpSpeed;
 	public float engagementRadius;
-	public float keptDistance;
 	public int lowHealthThreshold;
-	public float radius = 15.0F;
-	public float power = 20.0F;
+	public float explosionRadius = 15.0F;
+	public float explosionPower = 20.0F;
 
 	// private vars
 	public int health = 100;
 	public EnemyState state = EnemyState.Standby;
 	public bool alert = false;
-	public float distFrom;
+	public float pDist;
+	public Vector3 destPos;
+	private float keptDistance;
 	public Rigidbody rb;
-
-	// test
 
 	// Use this for initialization
 	void Start () 
 	{
 		mamaroM = Mamaro_Manager.inst;
 		rb = GetComponent<Rigidbody>();
+		destPos = this.transform.position;
+
+		keptDistance = engagementRadius * 0.75f;
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		distFrom = Vector3.Distance(mamaroM.transform.position, this.transform.position);
+		pDist = Vector3.Distance(mamaroM.transform.position, this.transform.position);
 
 		///test////////
 		if(Input.GetKeyDown(KeyCode.F5))
@@ -50,14 +53,17 @@ public class Script_Enemy_Ranged : MonoBehaviour
 
 
 			// check if mamaro is within engagment range
-			if(!alert && distFrom < engagementRadius)
+			if(!alert && pDist < engagementRadius)
+			{
+				alert = true;
 				state = EnemyState.Offensive;
+			}
 
 			// wait for mamaro to stop malfunctioning
 			if(alert && !mamaroM.isMalfunctioning)
 			{
 				// check which state to revert to
-				if(distFrom < engagementRadius)
+				if(pDist < engagementRadius)
 				{
 					// check health level
 					if(health <= lowHealthThreshold)
@@ -74,14 +80,44 @@ public class Script_Enemy_Ranged : MonoBehaviour
 		// player is within engagment range. Enemy health is sufficient
 		case EnemyState.Offensive:
 
+			// is player in engagement range
+			if(pDist < engagementRadius)
+			{
+				// is the player too close
+				if(pDist < keptDistance)
+				{
+					// switch to defence with new destPos
+					destPos = GetNewPos();
+					state = EnemyState.Defensive;
+				}
+				else
+				{
+					// attack the player at rate x
+				}
+			}
+			else
+			{
+				// catch up to the player
+				state = EnemyState.Stalking;
+			}
+
+			// apply movement
+
 			break;
 
 		// player is within engagement range. Enemy is low on health
 		case EnemyState.Defensive:
 
+			MoveTo(destPos, moveSpeed);
+
+
 			break;
 
 		case EnemyState.Stalking:
+
+			// check if back in range
+			if(pDist < engagementRadius)
+				state = EnemyState.Offensive;
 
 			break;
 
@@ -91,22 +127,29 @@ public class Script_Enemy_Ranged : MonoBehaviour
 			break;
 		}
 	}
-
-	/// draw inspector gizoms
-	void OnDrawGizmos() 
+	
+	/// moves the enemy towards the destPos
+	private void MoveTo(Vector3 pos, float speed)
 	{
-		// engagement radius
-		Gizmos.color = Color.yellow;
-		Gizmos.DrawWireSphere(transform.position, engagementRadius);
-
-		// only show if in range
-		if(distFrom < engagementRadius)
+		// not yet reached destPos
+		if(Vector3.Distance(this.transform.position, destPos) > 1.0f)
 		{
-			// keptDistance radius
-			Gizmos.color = Color.red;
-			Gizmos.DrawWireSphere(mamaroM.transform.position, keptDistance);
+			// face destPos
+			LookTowards(destPos);
+			transform.Translate(-transform.forward * speed * Time.deltaTime);// = new Vector3(pPos.x, pPos.y, pPos.z - speed * Time.deltaTime);
 		}
+		else
+		{
+			// face players
+			LookTowards(mamaroM.transform.position);
+			state = EnemyState.Offensive;
+		}
+	}
 
+	// slowly looks faces target pos
+	public void LookTowards(Vector3 pos)
+	{
+		transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(pos - transform.position), rotSpeed * Time.deltaTime);
 	}
 
 	/// reduces health and checks for death
@@ -124,7 +167,6 @@ public class Script_Enemy_Ranged : MonoBehaviour
 		if(health <= 0)
 		{
 			// death sequence
-			//TODO play death audio
 			DetachChildren(this.transform);
 			//TODO apply particles
 			Explode();
@@ -136,50 +178,75 @@ public class Script_Enemy_Ranged : MonoBehaviour
 	public void Explode()
 	{
 		Vector3 explosionPos = this.transform.position + transform.forward * 2;
-		Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);
+		Collider[] colliders = Physics.OverlapSphere(explosionPos, explosionRadius);
 
 		foreach (Collider hit in colliders)
 		{
 			if (hit && hit.GetComponent<Rigidbody>())
 			{
-				hit.GetComponent<Rigidbody>().AddExplosionForce(power, explosionPos, radius, 1.0F, ForceMode.Impulse);
+				hit.GetComponent<Rigidbody>().AddExplosionForce(explosionPower, explosionPos, explosionPower, 1.0F, ForceMode.Impulse);
 			}
 		}
 	}
 
-	/// applies changes to children within parent
+	// deparents children up to x deep
 	private void DetachChildren(Transform trans)
 	{
-		// is parent
-		if(trans.childCount > 0)
+		// check each child
+		foreach(Transform child0 in trans)
 		{
-			// run fo each child
-			foreach (Transform child in trans) 
+			// is parent
+			if(child0.childCount > 0)
 			{
-				DetachChildren(child);
+				// check each child
+				foreach(Transform child1 in child0)
+				{
+					// is parent
+					if(child1.childCount > 0)
+					{
+						// check each child
+						foreach(Transform child2 in child1)
+						{
+							// is parent
+							if(child2.childCount > 0)
+							{
+								// check each child
+								foreach(Transform child3 in child2)
+								{
+									// add rigid bodies and collider
+									if(child3.gameObject.GetComponent<Rigidbody>() == null)
+										child3.gameObject.AddComponent<Rigidbody>();
+									if(child3.gameObject.GetComponent<BoxCollider>() == null)
+										child3.gameObject.AddComponent<BoxCollider>();
+								}
+							}
+
+							// add rigid bodies and collider
+							if(child2.gameObject.GetComponent<Rigidbody>() == null)
+								child2.gameObject.AddComponent<Rigidbody>();
+							if(child2.gameObject.GetComponent<BoxCollider>() == null)
+								child2.gameObject.AddComponent<BoxCollider>();
+						}
+					}
+
+					// add rigid bodies and collider
+					if(child1.gameObject.GetComponent<Rigidbody>() == null)
+						child1.gameObject.AddComponent<Rigidbody>();
+					if(child1.gameObject.GetComponent<BoxCollider>() == null)
+						child1.gameObject.AddComponent<BoxCollider>();
+				}
 			}
 
-			// change parent
-			transform.DetachChildren();
-
-			// check for rigid body : Add
-			if(trans.GetComponent<Rigidbody>() == null)
-				trans.gameObject.AddComponent<Rigidbody>();
-
-			trans.gameObject.AddComponent<CapsuleCollider>();
-		}
-		else
-		{
-			// check for rigid body : Add
-			if(trans.GetComponent<Rigidbody>() == null)
-				trans.gameObject.AddComponent<Rigidbody>();
-
-			trans.gameObject.AddComponent<CapsuleCollider>();
+			// add rigid bodies and collider
+			if(child0.gameObject.GetComponent<Rigidbody>() == null)
+				child0.gameObject.AddComponent<Rigidbody>();
+			if(child0.gameObject.GetComponent<BoxCollider>() == null)
+				child0.gameObject.AddComponent<BoxCollider>();
 		}
 	}
 
 	/// returns a valid new position within the given range
-	private Vector3 GetNewPos(float range)
+	private Vector3 GetNewPos()
 	{
 		bool foundPath = false;
 		Vector3 tempV;
@@ -192,28 +259,41 @@ public class Script_Enemy_Ranged : MonoBehaviour
 			breakTimer += Time.deltaTime;
 			if(breakTimer > 2.0f)
 			{
-				Debug.LogError("While loop was stuck in constant loop. Check you logic!");
-				return this.transform.position;
+				Debug.LogError("While loop was stuck in constant loop. Check your logic!");
+				foundPath = true;
 			}
 
 			// pick a pos within the specefied range
-			tempV = this.transform.position + Random.insideUnitSphere * (engagementRadius / 2);
+			tempV = transform.position + Random.insideUnitSphere * engagementRadius;
+			Vector3 selected = new Vector3(tempV.x, transform.position.y, tempV.z);
 
 			// within engagement range but out of keptDistance range
-			float tempDist = Vector3.Distance(mamaroM.transform.position, tempV);
-			if(tempDist > keptDistance && tempDist < engagementRadius)
+			float fromPlayer = Vector3.Distance(mamaroM.transform.position, selected);
+			if(fromPlayer > keptDistance && fromPlayer < engagementRadius)
 			{
-				// check if point A and B have an obstacle in the way and less than desired angle
+				// check if point A and B have an obstacle in the way
 				RaycastHit hit;
-				if(!Physics.Linecast(this.transform.position, tempV, out hit))
+				if(!Physics.Linecast(this.transform.position, selected, out hit))
 				{
 					foundPath = true;
-					return new Vector3(tempV.x, transform.position.y, tempV.z);
+					return selected;
 				}
 			}
 		}
 
+		// return this poeition in case of path not found
 		return this.transform.position;
 	}
 
+	/// draw inspector gizoms
+	void OnDrawGizmos() 
+	{
+		// engagement radius
+		Gizmos.color = Color.yellow;
+		Gizmos.DrawWireSphere(transform.position, engagementRadius);
+		
+		// destPos
+		Gizmos.color = Color.green;
+		Gizmos.DrawWireSphere(destPos, 2.0f);
+	}
 }

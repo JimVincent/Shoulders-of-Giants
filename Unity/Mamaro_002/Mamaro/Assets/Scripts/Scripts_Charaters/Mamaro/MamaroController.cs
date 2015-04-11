@@ -114,7 +114,7 @@ public class MamaroController : MonoBehaviour {
 		// Quick Time controls
 		if(mamaro.isMalfunctioning)
 		{
-			if(state.Buttons.A == ButtonState.Pressed && prevState.Buttons.A == ButtonState.Released || Input.GetKeyDown(KeyCode.Space))
+			if(state.Buttons.A == ButtonState.Pressed && prevState.Buttons.A == ButtonState.Released)
 				QT.Resist();
 		}
 
@@ -137,18 +137,49 @@ public class MamaroController : MonoBehaviour {
 
 
 
+		//Punch Attack
+		if (state.Buttons.RightShoulder == ButtonState.Pressed && !Mamaro_Attack.inst.isChargeRange)
+		{
+			Mamaro_Attack.inst.isChargePunch = true;
+		}
+		else
+		{
+			Mamaro_Attack.inst.isChargePunch = false;
+		}
+
+		//Range Attack
+		if (state.Buttons.LeftShoulder == ButtonState.Pressed && !Mamaro_Attack.inst.isChargePunch)
+		{
+			Mamaro_Attack.inst.isChargeRange = true;
+		}
+		else
+		{
+			Mamaro_Attack.inst.isChargeRange = false;
+		}
 
 
 
 
-		
+
+
+
+		//Adust Ability Cores
 		if (state.DPad.Left == ButtonState.Pressed)
 		{
 			Ability_Manager.inst.SelectSocketLeft();
 		}
-		if (state.DPad.Right == ButtonState.Pressed)
+		else if (state.DPad.Right == ButtonState.Pressed)
 		{
 			Ability_Manager.inst.SelectSocketRight();
+		}
+
+		if (state.DPad.Up == ButtonState.Pressed && prevState.DPad.Up == ButtonState.Released)
+		{
+			Ability_Manager.inst.SocketAdd();
+		}
+		else if (state.DPad.Down == ButtonState.Pressed && prevState.DPad.Down == ButtonState.Released)
+		{
+			Ability_Manager.inst.SocketRemove();
 		}
 
 
@@ -194,6 +225,54 @@ public class MamaroController : MonoBehaviour {
 			tempDir = move.moveDir;
 			tempDir = tempDir.normalized;
 			move.Dodge(tempDir);
+		}
+
+		// Quick Time controls
+		if(mamaro.isMalfunctioning)
+		{
+			if(Input.GetKeyDown(KeyCode.Space))
+				QT.Resist();
+		}
+
+		//Punch Attack
+		if (Input.GetKey(KeyCode.E) && !Mamaro_Attack.inst.isChargeRange)
+		{
+			Mamaro_Attack.inst.isChargePunch = true;
+		}
+		else
+		{
+			Mamaro_Attack.inst.isChargePunch = false;
+		}
+		
+		//Range Attack
+		if (Input.GetKey(KeyCode.Q) && !Mamaro_Attack.inst.isChargePunch)
+		{
+			Mamaro_Attack.inst.isChargeRange = true;
+		}
+		else
+		{
+			Mamaro_Attack.inst.isChargeRange = false;
+		}
+
+
+
+		//Adust Ability Cores
+		if (Input.GetKeyDown(KeyCode.LeftArrow))
+		{
+			Ability_Manager.inst.SelectSocketLeft();
+		}
+		else if (Input.GetKeyDown(KeyCode.RightArrow))
+		{
+			Ability_Manager.inst.SelectSocketRight();
+		}
+		
+		if (Input.GetKeyDown(KeyCode.UpArrow))
+		{
+			Ability_Manager.inst.SocketAdd();
+		}
+		else if (Input.GetKeyDown(KeyCode.DownArrow))
+		{
+			Ability_Manager.inst.SocketRemove();
 		}
 		
 		

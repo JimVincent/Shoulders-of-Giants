@@ -7,6 +7,7 @@ public class Mamaro_Manager : MonoBehaviour
 	public static Mamaro_Manager inst;
 
 	// static class access
+	private Game_Manager GM;
 	private Ability_Manager abMan;
 	private Cam_Manager cam;
 	private Lucy_Manager lucy;
@@ -14,6 +15,7 @@ public class Mamaro_Manager : MonoBehaviour
 	// inspector assigned vars
 	public int maxHealth = 100;
 	public int smallDamage, mediumDamage, largeDamage;	// in regards to how much cam shake to apply
+	public Vector3 camMalfuncPos;
 
 	// non-inspector assigned vars
 	//[HideInInspector]
@@ -33,16 +35,22 @@ public class Mamaro_Manager : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+		GM = Game_Manager.inst;
 		abMan = Ability_Manager.inst;
 		cam = Cam_Manager.inst;
 		health = maxHealth;
 		lucy = Lucy_Manager.inst;
+
+		//To RemoveWArning ############################################################
+		int i = (int)lucy.fear;													  //###
+		i ++;																	  //###
+		// ############################################################################
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		// update all ability cores
+		// update local ability vars from abMan
 		UpdateCores();
 
 		////////////////////////////////////////////
@@ -50,8 +58,9 @@ public class Mamaro_Manager : MonoBehaviour
 		//////////////////////////////////////////
 		if(Input.GetKeyDown(KeyCode.F4))	/////
 		{								   /////
-			int testDamage = largeDamage; /////
-			OnTakeDamage(testDamage);    /////
+			//int testDamage = largeDamage; /////
+			//OnTakeDamage(testDamage);
+			OnMalfunction();
 		}							    /////
 		////////////////////////////////////
 	}
@@ -63,7 +72,7 @@ public class Mamaro_Manager : MonoBehaviour
 		if(health > 0)
 		{
 			// let Lucy know
-			lucy.OnChangeFear(FearType.Damage);
+			//lucy.OnChangeFear(FearType.Damage);
 
 			// check for dead
 			if(health - amount <= 0)
@@ -93,6 +102,14 @@ public class Mamaro_Manager : MonoBehaviour
 				}
 			}
 		}
+	}
+
+	/// triggers malfunction sequence
+	public void OnMalfunction()
+	{
+		abMan.AddSpareCore();
+		isMalfunctioning = true;
+		GM.MalfunctionMode(true);
 	}
 
 	// adds x amount to health

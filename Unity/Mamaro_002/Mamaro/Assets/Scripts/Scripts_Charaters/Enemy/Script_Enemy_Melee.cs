@@ -20,6 +20,11 @@ public class Script_Enemy_Melee : MonoBehaviour
 	void Start () 
 	{
 		playerMove = MamaroMovement.inst;
+
+		//To RemoveWArning ############################################################
+		int i = (int)playerMove.moveDir.x;										  //###
+		i ++;																	  //###
+		// ############################################################################
 	}
 	
 	// Update is called once per frame
