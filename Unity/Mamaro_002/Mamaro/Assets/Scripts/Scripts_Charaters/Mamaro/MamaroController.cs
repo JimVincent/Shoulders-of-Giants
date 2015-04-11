@@ -13,9 +13,9 @@ public class MamaroController : MonoBehaviour {
 	//###########################################
 	//Required For X Input
 	bool playerIndexSet = false;
-	PlayerIndex playerIndex;
-	GamePadState state;
-	GamePadState prevState;
+	public PlayerIndex playerIndex;
+	public GamePadState state;
+	public GamePadState prevState;
 	//############################################
 
 	MamaroMovement move;

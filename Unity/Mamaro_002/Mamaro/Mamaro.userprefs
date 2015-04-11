@@ -1,23 +1,9 @@
 ﻿<Properties>
-<<<<<<< HEAD
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Scripts_Charaters\Mamaro\Mamaro_Manager.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Tutorials\Tutorial_Movement.cs">
     <Files>
-      <File FileName="..\..\..\..\FlowMapTest\Assets\Shaders2\OceanSpec.shader" Line="221" Column="2" />
-      <File FileName="Assets\XInputDotNet\Examples\XInputTestCS.cs" Line="2" Column="1" />
-      <File FileName="Assets\Scripts\Scripts_Charaters\Mamaro\Mamaro_Manager.cs" Line="123" Column="1" />
-=======
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Scripts_Charaters\Enemy\Script_Enemy_Melee.cs">
-    <Files>
-      <File FileName="Assets\Scripts\Scripts_Charaters\Mamaro\MamaroController.cs" Line="182" Column="1" />
-      <File FileName="Assets\Scripts\Scripts_Charaters\Mamaro\MamaroMovement.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Scripts_General\Game_Manager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Scripts_Charaters\Mamaro\Mamaro_Attack.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Scripts_General\Ability_Manager.cs" Line="131" Column="6" />
-      <File FileName="Assets\Scripts\Scripts_Charaters\Mamaro\Mamaro_Manager.cs" Line="45" Column="41" />
-      <File FileName="Assets\Scripts\Scripts_Charaters\Enemy\Script_Enemy_Melee.cs" Line="25" Column="49" />
->>>>>>> 779b1b39bb6852a4e24e0a1e1ab49c79451131b1
+      <File FileName="Assets\Scripts\Tutorials\Tutorial_Movement.cs" Line="69" Column="9" />
+      <File FileName="Assets\Scripts\Scripts_Charaters\Mamaro\MamaroController.cs" Line="77" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
