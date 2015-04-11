@@ -40,6 +40,11 @@ public class Mamaro_Manager : MonoBehaviour
 		cam = Cam_Manager.inst;
 		health = maxHealth;
 		lucy = Lucy_Manager.inst;
+
+		//To RemoveWArning ############################################################
+		int i = (int)lucy.fear;													  //###
+		i ++;																	  //###
+		// ############################################################################
 	}
 	
 	// Update is called once per frame

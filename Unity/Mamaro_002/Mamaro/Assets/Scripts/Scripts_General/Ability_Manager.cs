@@ -27,11 +27,11 @@ public class Ability_Manager : MonoBehaviour
 	private float lerpInc;
 	private bool isRotating;
 	private string rotDir;
-
+	
 	// vars for socket slider
-	private bool shownOnce = true;
-	private bool showSocket = false;
-	private float sHangTimer = 0.0f;
+	public bool shownOnce = false;
+	public bool showSocket = false;
+	public float sHangTimer = 0.0f;
 	
 	void Awake()
 	{
@@ -56,17 +56,18 @@ public class Ability_Manager : MonoBehaviour
 	{
 		// update spare core text
 		UpdateSparetext();
-
+		
 		//TODO add in gate for if pause here
 		// allow user input control
-		InputControl();
-
+		currentAngle = controlPanel_Parent.transform.rotation.eulerAngles.z;
+		//InputControl();
+		
 		// in position
 		if((int)currentAngle == GetSocketAngle(selectedSocket))
 		{
 			lerpInc = 0.0f;
 			isRotating = false;
-
+			
 			// extrude slider for x seconds
 			if(showSocket)
 			{
@@ -80,7 +81,7 @@ public class Ability_Manager : MonoBehaviour
 					SlideSocket(sockets[selectedSocket].socketImage, sockets[selectedSocket].enabledPos, sockets[selectedSocket].disabledPos);
 					sHangTimer = 0.0f;
 					showSocket = false;
-					shownOnce = true;
+					shownOnce = false;
 				}
 			}
 		}
@@ -90,7 +91,7 @@ public class Ability_Manager : MonoBehaviour
 			isRotating = true;
 			controlPanel_Parent.transform.rotation = Quaternion.Euler(controlPanel_Parent.transform.rotation.x, controlPanel_Parent.transform.rotation.y, currentAngle);
 			LerpLin();
-
+			
 			// close slider before changing selected socket
 			if(showSocket)
 			{
@@ -111,13 +112,26 @@ public class Ability_Manager : MonoBehaviour
 		sockets[3].SetActiveCores(shield);
 		spareCores = spare;
 	}
-
-	/// adds core to spare cores
-	public void AddSpareCore()
+	
+	public AbilitySocket GetSocket(Sockets type)
 	{
-		//TODO apply some particles or visual notice
-		//TODO play adding audio
-		spareCores++;
+		switch (type)
+		{
+		case Sockets.Melee:
+			return sockets[0];
+			//break;
+		case Sockets.Speed:
+			return sockets[1];
+			//break;
+		case Sockets.Ranged:
+			return sockets[2];
+			//break;
+		case Sockets.Shield:
+			return sockets[3];
+			//break;
+		}
+		Debug.Log("Get Socket <" + type.ToString() + "> Does Not Exist");
+		return null;
 	}
 	
 	// keeps spare core text updated
@@ -196,11 +210,78 @@ public class Ability_Manager : MonoBehaviour
 		}
 	}
 	
+	public void SocketAdd()
+	{
+		
+		// add cores to selected
+		if(showSocket)
+		{
+			// check if already full
+			if(sockets[selectedSocket].GetCoreCount() < 4)
+			{
+				// add from spares
+				if(spareCores > 0)
+				{
+					sockets[selectedSocket].AddCore();
+					spareCores--;
+				}
+				else if(sockets[selectedSocket].oppositeSocket.GetCoreCount() > 0)
+				{
+					// add from opposite
+					sockets[selectedSocket].oppositeSocket.RemoveCore();
+					sockets[selectedSocket].AddCore();
+				}
+			}
+			sHangTimer = 0.0f;
+		}
+		
+		// show only once per rotation or up input
+		if(!shownOnce)
+		{
+			showSocket = true;
+			shownOnce = true;
+		}
+	}
+	
+	
+	
+	public void SocketRemove()
+	{
+		if(showSocket)
+		{
+			// check for empty
+			if(sockets[selectedSocket].GetCoreCount() > 0)
+			{
+				// remove core and reset sHangTimer
+				sockets[selectedSocket].RemoveCore();
+				spareCores++;
+			}
+			sHangTimer = 0.0f;
+		}
+		
+		// show only once per rotation or up input
+		if(!shownOnce)
+		{
+			showSocket = true;
+			shownOnce = true;
+		}
+	}
+
+	
+	/// adds core to spare cores
+	public void AddSpareCore()
+	{
+		//TODO apply some particles or visual notice
+		//TODO play adding audio
+		spareCores++;
+	}
+
 	/// allows user input to control rotation and core adding/removing cores
 	private void InputControl()
 	{
-		currentAngle = controlPanel_Parent.transform.rotation.eulerAngles.z;
 		
+		
+		/*
 		// input for which way to rotate
 		if(Input.GetKeyDown(KeyCode.LeftArrow))
 		{
@@ -212,55 +293,11 @@ public class Ability_Manager : MonoBehaviour
 			showSocket = true;
 			SelectSocketRight();
 		}
-
-		///////////////////////////////////////////////////////////////////
-
-		// input to add and remove cores
-		if(!isRotating)
-		{
-			// add cores to selected
-			if(Input.GetKeyDown(KeyCode.UpArrow) && showSocket)
-			{
-				// check if already full
-				if(sockets[selectedSocket].GetCoreCount() < 4)
-				{
-					// add from spares
-					if(spareCores > 0)
-					{
-						sockets[selectedSocket].AddCore();
-						spareCores--;
-					}
-					else if(sockets[selectedSocket].oppositeSocket.GetCoreCount() > 0)
-					{
-						// add from opposite
-						sockets[selectedSocket].oppositeSocket.RemoveCore();
-						sockets[selectedSocket].AddCore();
-					}
-				}
-				sHangTimer = 0.0f;
-			}
-
-			if(Input.GetKeyDown(KeyCode.DownArrow) && showSocket)
-			{
-				// check for empty
-				if(sockets[selectedSocket].GetCoreCount() > 0)
-				{
-					// remove core and reset sHangTimer
-					sockets[selectedSocket].RemoveCore();
-					spareCores++;
-				}
-				sHangTimer = 0.0f;
-			}
-
-			// show only once per rotation or up input
-			if(!shownOnce || Input.GetKeyDown(KeyCode.UpArrow))
-			{
-				showSocket = true;
-				shownOnce = true;
-			}
-		}
+		*/
+		
+		
 	}
-
+	
 	/// returns spare core count
 	public int GetSpareCount()
 	{
@@ -272,14 +309,14 @@ public class Ability_Manager : MonoBehaviour
 	{
 		return socketNum * 90; 
 	}
-
+	
 	// slides image from a to b with lerp
 	private void SlideSocket(Image socket, Vector3 from, Vector3 to)
 	{
 		// TODO apply a lerp (from, to)
 		socket.transform.localPosition = to;
 	}
-
+	
 	/// a linear interpolation
 	private void LerpLin()
 	{
