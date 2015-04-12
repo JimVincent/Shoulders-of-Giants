@@ -60,7 +60,7 @@ public class Game_Manager : MonoBehaviour
 			if(Timer_mal >= malfunctionLength)
 			{
 				Timer_mal = 0.0f;
-				cam.LerpTo(camOriginalPos.position);
+				cam.LerpTo(CamPos.Original);
 			}
 		}
 	}
@@ -81,7 +81,7 @@ public class Game_Manager : MonoBehaviour
 			malMode = true;
 
 			// put cam into position
-			cam.LerpTo(malCamPos.position);
+			cam.LerpTo(CamPos.Malfunction);
 
 		}
 		else

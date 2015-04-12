@@ -67,6 +67,7 @@
      <Compile Include="Assets\Scripts\Scripts_Misc\FusionCore.cs" />
      <Compile Include="Assets\Scripts\Tutorials\Tutorial_Movement.cs" />
      <Compile Include="Assets\Scripts\Tutorials\Tutorial_StatSelect.cs" />
+     <Compile Include="Assets\TEST_Cam.cs" />
      <Compile Include="Assets\XInputDotNet\Examples\XInputTestCS.cs" />
      <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
@@ -153,10 +154,7 @@
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="XInputDotNetPure">
- <HintPath>C:/Users/Chris/Desktop/Uni/Trimester 4 2015/GPG220 Studio 2/Mamoro/Repo/Unity/Mamaro_002/Mamaro/Assets/Plugins/x86/XInputDotNetPure.dll</HintPath>
- </Reference>
- <Reference Include="XInputDotNetPure">
- <HintPath>C:/Users/Chris/Desktop/Uni/Trimester 4 2015/GPG220 Studio 2/Mamoro/Repo/Unity/Mamaro_002/Mamaro/Assets/Plugins/x86_64/XInputDotNetPure.dll</HintPath>
+ <HintPath>C:/Users/Jim/Desktop/Repo Projects/Mamaro/Unity/Mamaro_002/Mamaro/Assets/XInputDotNetPure.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

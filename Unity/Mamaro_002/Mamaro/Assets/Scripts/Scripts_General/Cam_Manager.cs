@@ -10,6 +10,7 @@ using System.Collections;
 
 // GLOBAL: for passed parameter of shake func
 public enum Shake {Small, Medium, Large};
+public enum CamPos {Original, Malfunction};
 
 public class Cam_Manager : MonoBehaviour 
 {
@@ -18,7 +19,6 @@ public class Cam_Manager : MonoBehaviour
 	
 	// inspector assigned vars
 	public Camera cam;
-	public Vector3 camOffset;
 	public float camSpeed;
 	[Range(0.1f, 0.5f)]
 	public float intensityBuff = 0.25f;
@@ -26,11 +26,13 @@ public class Cam_Manager : MonoBehaviour
 	public float easeRate = 1.0f;
 	[Range(0.1f, 3.0f)]
 	public float smallShake = 0.5f, mediumShake = 0.9f, largeShake = 1.4f;
+	public Vector3 camMalfuncPos;
 
 	// private vars
 	private float shake;
 	private Vector3 currentPos;
 	private Vector3 targetPos;
+	private Vector3 startPos;
 	private Vector3 originalPos;
 	private bool isMoving = false;
 	private float lerpInc;
@@ -43,7 +45,8 @@ public class Cam_Manager : MonoBehaviour
 
 	void Start()
 	{
-		camOffset = cam.transform.localPosition;
+		currentPos = transform.localPosition;
+		originalPos = transform.localPosition;
 	}
 
 	void Update()
@@ -62,9 +65,11 @@ public class Cam_Manager : MonoBehaviour
 		// is currently moving to another position
 		if(isMoving)
 		{
+
+			print ("hit");
 			// apply appropriate ease interpolation
 			LerpLin();
-			currentPos = Vector3.Lerp(originalPos, targetPos, lerpInc);
+			currentPos = Vector3.Lerp(startPos, targetPos, lerpInc);
 
 			// stop once target is reached
 			if(currentPos == targetPos)
@@ -75,7 +80,7 @@ public class Cam_Manager : MonoBehaviour
 		}
 
 		// sets the object back to the currentPos every frame before shake
-		cam.transform.localPosition = camOffset - currentPos;
+		cam.transform.localPosition = currentPos;
 
 
 		//TODO add gate here for when paused to prevent the screen shake
@@ -101,7 +106,7 @@ public class Cam_Manager : MonoBehaviour
 	{
 		// set startPos if not already set
 		if (shake == 0.0f)
-			currentPos = camOffset - cam.transform.localPosition;
+			currentPos = cam.transform.localPosition;
 
 		// set shake amount
 		switch(amount)
@@ -122,10 +127,15 @@ public class Cam_Manager : MonoBehaviour
 	}
 
 	// lerps cam towards passed position
-	public void LerpTo(Vector3 newPos)
+	public void LerpTo(CamPos pos)
 	{
-		originalPos = cam.transform.localPosition;
-		targetPos = newPos;
+		// assign param
+		if (pos == CamPos.Malfunction)
+			targetPos = camMalfuncPos;
+		else
+			targetPos = originalPos;
+
+		startPos = cam.transform.localPosition;
 		isMoving = true;
 	}
 	
