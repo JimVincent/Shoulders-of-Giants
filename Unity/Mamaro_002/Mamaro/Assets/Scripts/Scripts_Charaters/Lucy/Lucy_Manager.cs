@@ -6,28 +6,33 @@ public class Lucy_Manager : MonoBehaviour {
 	public enum LucyState{Idle, Repair, Scared, Petrified, Tapping};
 	public static Lucy_Manager inst;
 
-	public LucyState state;
+	[SerializeField]
+	private LucyState state;
 	Mamaro_Manager mamaro;
 	GameObject lucyTapping;
 
+	[System.NonSerialized]
 	public int fear;
 	public int fearMax;
 	public int fearScaredLevel;
 	public int fearFrightenedLevel;
 
 	public float fearDecreaseTime;
-	public float timerFearDecrease;
+	private float timerFearDecrease;
 
 	public float repairDelay;//The time after takeing fear damage untill recharge begins.
-	public float timerRepairDelay;//timer for the delay on recharge
+	private float timerRepairDelay;//timer for the delay on recharge
 
 	public float repairInterval;//The timer in between when lucy is scared and repairing.
-	public float timerRepair;
+	private float timerRepair;
 
 	public int repairAmountRepair;//The Amount that lucy repairs mamaro
-	public int repairAmountScared;//The Amount that lucy repairs mamar While in scared mode
+	private int repairAmountScared;//The Amount that lucy repairs mamar While in scared mode
 
-	public bool isRepairing;
+	private bool isRepairing;
+
+	private Vector3 meterVec = Vector3.one;
+	public RectTransform meter;
 
 	void Awake()
 	{
@@ -39,13 +44,15 @@ public class Lucy_Manager : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		fear = 0;
+		fear = 50;
 		mamaro = Mamaro_Manager.inst;
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
+		meterVec.y = ((float)fear / (float)fearMax);
+		meter.localScale = meterVec;
 		if (fear > 0)
 		{
 			timerFearDecrease += Time.deltaTime;
