@@ -47,6 +47,7 @@ public class Mamaro_Attack : MonoBehaviour
 		if (anim.GetCurrentAnimatorStateInfo(0).IsName("CHR_Mamaro_Anim_Idle"))
 		{
 			fistCollider.enabled = false;
+			isAttacking = false;
 		}
 
 	}
@@ -102,8 +103,6 @@ public class Mamaro_Attack : MonoBehaviour
 		}
 		else
 		{
-			//punchCharge = 0.0f;	// button let go looses charge ??????
-			// or
 			// reduce at half charge rate until empty
 			if(punchCharge > 0.0f)
 			{
@@ -116,10 +115,6 @@ public class Mamaro_Attack : MonoBehaviour
 						anim.SetBool("Bool_MeeleCharge", false);
 
 				}
-
-				
-				// turn on fist collider
-				fistCollider.enabled = true;
 
 				punchCharge -= Time.deltaTime * (chargeRate * 2f); 
 
@@ -170,8 +165,6 @@ public class Mamaro_Attack : MonoBehaviour
 		}
 		else 
 		{
-			//rangedCharge = 0.0f;	// button let go looses charge ??????
-			// or
 			// reduce at half charge rate until empty
 			if(rangedCharge > 0.0f)
 			{

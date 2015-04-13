@@ -1,8 +1,16 @@
 ﻿<Properties>
+<<<<<<< HEAD
   <MonoDevelop.Ide.Workspace />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Scripts_Enviromental_Destruction\Script_Destruction_Chunks.cs">
     <Files>
       <File FileName="Assets\Scripts\Scripts_Enviromental_Destruction\Script_Destruction_Chunks.cs" Line="11" Column="28" />
+=======
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Scripts_Charaters\Mamaro\Temp_Mamaro_CannonFire.cs">
+    <Files>
+      <File FileName="Assets\Scripts\Scripts_Charaters\Mamaro\Mamaro_LaserShot.cs" Line="17" Column="104" />
+      <File FileName="Assets\Scripts\Scripts_Charaters\Mamaro\Temp_Mamaro_CannonFire.cs" Line="9" Column="16" />
+>>>>>>> 83d4c5502ad1723a2a8c710e0b2c7015333230c5
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
