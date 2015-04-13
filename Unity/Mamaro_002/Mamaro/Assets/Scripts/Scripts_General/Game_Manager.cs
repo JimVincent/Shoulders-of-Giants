@@ -23,7 +23,7 @@ public class Game_Manager : MonoBehaviour
 	void Awake()
 	{
 		// assign static instance
-		if(inst = null)
+		if(inst == null)
 			inst = this;
 	}
 
