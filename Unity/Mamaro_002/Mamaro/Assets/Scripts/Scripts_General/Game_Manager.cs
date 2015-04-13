@@ -14,20 +14,16 @@ public class Game_Manager : MonoBehaviour
 	private Cam_Manager cam;
 
 	// inspector assigned vars
-	public float malfunctionLength;
-	public Transform malCamPos;
+	public float malfunctionSecs;
 
 	// private vars
 	public bool malMode = false;
-	public Transform camOriginalPos;
-
 	public float Timer_mal = 0.0f;
-
 
 	void Awake()
 	{
 		// assign static instance
-		if (inst = null)
+		if(inst = null)
 			inst = this;
 	}
 
@@ -39,9 +35,6 @@ public class Game_Manager : MonoBehaviour
 		Lucy = Lucy_Manager.inst;
 		abMan = Ability_Manager.inst;
 		cam = Cam_Manager.inst;
-
-		// set original cam pos
-		camOriginalPos = transform;
 	}
 
 	void Update()
@@ -57,7 +50,7 @@ public class Game_Manager : MonoBehaviour
 			Timer_mal += Time.deltaTime;
 
 			// check for complete
-			if(Timer_mal >= malfunctionLength)
+			if(Timer_mal >= malfunctionSecs)
 			{
 				Timer_mal = 0.0f;
 				cam.LerpTo(CamPos.Original);

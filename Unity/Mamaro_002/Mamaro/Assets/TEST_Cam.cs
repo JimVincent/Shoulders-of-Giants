@@ -17,6 +17,6 @@ public class TEST_Cam : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown (KeyCode.Y))
-			Cam_Manager.inst.LerpTo(CamPos.Original);
+			Audio_Manager.inst.PlayRecursive(AA.Env_Desert_sandWind, Mamaro_Manager.inst.transform.position, "testerbaby");
 	}
 }
