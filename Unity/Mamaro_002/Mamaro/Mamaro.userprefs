@@ -1,8 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\..\..\Mamaro_003\MamaroV3\Assets\Scripts\Scripts_Enviromental_Destruction\Script_Destruction_Manager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Scripts_Enviromental_Destruction\Script_Destruction_Chunks.cs">
     <Files>
-      <File FileName="..\..\..\..\Mamaro_003\MamaroV3\Assets\Scripts\Scripts_Enviromental_Destruction\Script_Destruction_Manager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Scripts_Enviromental_Destruction\Script_Destruction_Chunks.cs" Line="11" Column="28" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

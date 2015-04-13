@@ -8,6 +8,7 @@ public class Script_Destruction_Chunks : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		rigBod = GetComponent<Rigidbody> ();
+		//rigBod.isKinematic = true;
 		rigBod.velocity = Vector3.zero;
 		rigBod.angularVelocity = Vector3.zero;
 		mamaro = GameObject.FindGameObjectWithTag ("Player");

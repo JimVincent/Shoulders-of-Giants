@@ -60,6 +60,7 @@
      <Compile Include="Assets\Scripts\Scripts_Charaters\Mamaro\Mamaro_Attack.cs" />
      <Compile Include="Assets\Scripts\Scripts_Charaters\Mamaro\Mamaro_Manager.cs" />
      <Compile Include="Assets\Scripts\Scripts_Enviromental_Destruction\Script_Destruction_Chunks.cs" />
+     <Compile Include="Assets\Scripts\Scripts_Enviromental_Destruction\Script_Destruction_Chunks_Manager.cs" />
      <Compile Include="Assets\Scripts\Scripts_Enviromental_Destruction\Script_Destruction_Manager.cs" />
      <Compile Include="Assets\Scripts\Scripts_Environmental\Tutorial_PunchRock.cs" />
      <Compile Include="Assets\Scripts\Scripts_General\Ability_Manager.cs" />

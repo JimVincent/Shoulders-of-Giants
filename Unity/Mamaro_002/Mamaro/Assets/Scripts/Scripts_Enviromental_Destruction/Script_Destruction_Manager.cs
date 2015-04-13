@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Script_Destruction_Manager : MonoBehaviour {
-	public GameObject WallDestruction, buildDestrction;
+	public GameObject destructionObject;
 	public GameObject mamaro;
 	public BoxCollider mamaroFistCol;
 	public Script_Destruction_Chunks[] chunklets = new Script_Destruction_Chunks[0];
@@ -13,10 +13,13 @@ public class Script_Destruction_Manager : MonoBehaviour {
 		mamaroFistCol = mamaro.GetComponentInChildren<BoxCollider> ();
 		if (gameObject.tag == "Wall") {
 			GameObject WallDestroLoad = Resources.Load ("Envi_Destructables/Kelpi_Wall_Busted") as GameObject;
-			WallDestruction = WallDestroLoad;
+			destructionObject = WallDestroLoad;
 		} else if (gameObject.tag == "Build") {
 			GameObject BuildDestroLoad = Resources.Load ("Envi_Destructables/L_Building_Model_Destro") as GameObject;
-			buildDestrction = BuildDestroLoad;
+			destructionObject = BuildDestroLoad;
+		} else if (gameObject.tag == "Ruin") {
+			GameObject RuinDestroLoad = Resources.Load ("Envi_Destructables/M_Rock_Thick_Destro") as GameObject;
+			destructionObject = RuinDestroLoad;
 		}
 	}
 	
@@ -26,13 +29,10 @@ public class Script_Destruction_Manager : MonoBehaviour {
 	}
 
 	public void BlowUp(){
-		if (gameObject.tag == "Wall") {
+		{
 			GameObject.Destroy (this.gameObject);
-			Instantiate (WallDestruction, new Vector3 (transform.position.x, transform.position.y + 0, transform.position.z), transform.rotation);
-		} else if (gameObject.tag == "Build") {
-			GameObject.Destroy (this.gameObject);
-			Instantiate (buildDestrction, new Vector3 (transform.position.x, transform.position.y + 0, transform.position.z), transform.rotation);
-		}
+			Instantiate (destructionObject, new Vector3 (transform.position.x, transform.position.y + 0, transform.position.z), transform.rotation);
+		} 
 	}
 	void OnCollisionEnter(Collision col)
 	{
